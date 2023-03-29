@@ -20,6 +20,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
      */
     Route::get('/', 'NewsController@index')->name('news.index');
     Route::get('/newsCreate', 'NewsController@create')->name('news.create');
+    Route::get('/newsStore', 'NewsController@store')->name('news.store');
     Route::get('/newsEdit', 'NewsController@edit')->name('news.edit');
     Route::get('/newsDestroy', 'NewsController@destroy')->name('news.destroy');
 
