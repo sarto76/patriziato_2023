@@ -40,7 +40,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Testo:</strong>
-                    <input type="email" name="text" class="form-control" placeholder="Testo">
+                    <input type="text" name="text" class="form-control" placeholder="Testo">
                     @error('text')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
@@ -52,6 +52,8 @@
                     <label class="form-check-label" for="flexRadioDefault1">
                         Attivo
                     </label>
+                </div>
+                <div class="form-check">
                     <input type="radio" class="form-check-input" name="active" value="0" class="form-control" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
                         Non attivo
@@ -61,7 +63,7 @@
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary ml-3">Aggiungi</button>
+            <button type="submit" class="btn btn-primary ml-3 mt-1">Aggiungi</button>
         </div>
     </form>
 

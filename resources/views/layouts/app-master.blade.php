@@ -11,6 +11,26 @@
     <!-- Bootstrap core CSS -->
     <link href="{!! url('assets/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">
 
+
+    <!----------------------------------------------------------------------------------- regna core ----------------------------------------------------------------->
+    <link href="{!! url('images/favicon.png') !!}" rel="icon">
+    <link href="{!! url('images/apple-touch-icon.png') !!}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{!! url('assets/regna/aos/aos.css') !!}" rel="stylesheet">
+    <link href="{!! url('assets/regna/boxicons/css/boxicons.min.css') !!}" rel="stylesheet">
+    <link href="{!! url('assets/regna/glightbox/css/glightbox.min.css') !!}" rel="stylesheet">
+    <link href="{!! url('assets/regna/swiper/swiper-bundle.min.css') !!}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{!! url('assets/regna/css/style.css') !!}" rel="stylesheet">
+    <!----------------------------------------------------------------------------------- fine regna core ----------------------------------------------------------------->
+
+
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;

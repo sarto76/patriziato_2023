@@ -23,8 +23,9 @@ class NewsController extends Controller
             'active' => 'required',
         ]);
 
+
         News::create($request->post());
 
-        return redirect()->route('companies.index')->with('success','Company has been created successfully.');
+        return redirect()->route('news.index')->with('success','News creata.');
     }
 }
