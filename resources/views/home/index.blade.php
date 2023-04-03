@@ -8,7 +8,7 @@
     <div class="container d-flex justify-content-between align-items-center">
 
         <div id="logo">
-            <a href="index.html"><img src="{!! url('images/logo.png') !!}" alt=""></a>
+            <a class ="pt-2" href="index.html"><img src="{!! url('images/stemma.png') !!}" alt=""></a>
             <!-- Uncomment below if you prefer to use a text logo -->
             <!--<h1><a href="index.html">Regna</a></h1>-->
         </div>
@@ -16,10 +16,9 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
-                <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto" href="#about">Informazioni</a></li>
+                <li><a class="nav-link scrollto" href="#services">News</a></li>
                 <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-                <li><a class="nav-link scrollto" href="#team">Team</a></li>
                 <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="#">Drop Down 1</a></li>
@@ -47,9 +46,9 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero">
     <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
-        <h1>Welcome to Regna</h1>
-        <h2>We are team of talented designers making websites with Bootstrap</h2>
-        <a href="#about" class="btn-get-started">Get Started</a>
+        <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
+        <h2>Copyright 2023 MS</h2>
+        <a href="#about" class="btn-get-started">Inizio</a>
     </div>
 </section><!-- End Hero Section -->
 
@@ -61,28 +60,21 @@
             <div class="row about-container">
 
                 <div class="col-lg-6 content order-lg-1 order-2">
-                    <h2 class="title">Few Words About Us</h2>
+                    <h2 class="title">Patriziato di Bosco Gurin</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Bosco Gurin, il più alto villaggio delle nostre montagne ticinesi, fin dal tempo remoto delle
+                        molteplici migrazioni di popoli attraverso i passi delle alpi nostre,
+                        si eresse in comunità  di libera gente svizzera, formata da famiglie walser.
                     </p>
 
+                    <h2 class="title">Componenti dell'Ufficio patriziale</h2>
+                    @foreach($member as $single)
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
                         <div class="icon"><i class="bi bi-briefcase"></i></div>
-                        <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-                        <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
+                        <h4 class="title"><a href="">{{$single->firstname}} {{$single->lastname}}</a></h4>
+                        <p class="description">{{$single->role}}</p>
                     </div>
-
-                    <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-                        <div class="icon"><i class="bi bi-card-checklist"></i></div>
-                        <h4 class="title"><a href="">Magni Dolores</a></h4>
-                        <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                    </div>
-
-                    <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-                        <div class="icon"><i class="bi bi-binoculars"></i></div>
-                        <h4 class="title"><a href="">Dolor Sitema</a></h4>
-                        <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-                    </div>
+                    @endforeach
 
                 </div>
 
@@ -92,118 +84,52 @@
         </div>
     </section><!-- End About Section -->
 
-    <!-- ======= Facts Section ======= -->
-    <section id="facts">
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h3 class="section-title">Facts</h3>
-                <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
-            </div>
-            <div class="row counters">
 
-                <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Clients</p>
-                </div>
-
-                <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="534" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Projects</p>
-                </div>
-
-                <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Hours Of Support</p>
-                </div>
-
-                <div class="col-lg-3 col-6 text-center">
-                    <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Hard Workers</p>
-                </div>
-
-            </div>
-
-        </div>
-    </section><!-- End Facts Section -->
-
-    <!-- ======= Services Section ======= -->
+    <!-- ======= News Section ======= -->
     <section id="services">
         <div class="container" data-aos="fade-up">
             <div class="section-header">
-                <h3 class="section-title">Services</h3>
-                <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+                <h3 class="section-title">News</h3>
+                <p class="section-description">Ultimi aggiornamenti dal Patriziato</p>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                    <div class="box">
-                        <div class="icon"><a href=""><i class="bi bi-briefcase"></i></a></div>
-                        <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-                        <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                    <div class="box">
-                        <div class="icon"><a href=""><i class="bi bi-card-checklist"></i></a></div>
-                        <h4 class="title"><a href="">Dolor Sitema</a></h4>
-                        <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                    <div class="box">
-                        <div class="icon"><a href=""><i class="bi bi-bar-chart"></i></a></div>
-                        <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-                        <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-                    </div>
-                </div>
+                @foreach ($news as $single)
+                    <div class="col-sm-6 mb-1">
+                        <div class="card">
+                            <h5 class="card-header">{{$single->title}}</h5>
+                            <div class="card-body">
 
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                    <div class="box">
-                        <div class="icon"><a href=""><i class="bi bi-binoculars"></i></a></div>
-                        <h4 class="title"><a href="">Magni Dolores</a></h4>
-                        <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+
+                                <p class="card-text">{{$single->text}}</p>
+                                <p class="card-text"><small class="text-muted">Caricata
+                                        il: {{date('d.m.Y', strtotime($single->created_at))}}</small></p>
+                            </div>
+                            @auth
+                                <div class="m-1">
+                                    <form action="{{ route('news.destroy',$single->id) }}" method="Post">
+                                        <a class="btn btn-primary" href="{{ route('news.edit',$single->id) }}">Edit</a>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            @endauth
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                    <div class="box">
-                        <div class="icon"><a href=""><i class="bi bi-brightness-high"></i></a></div>
-                        <h4 class="title"><a href="">Nemo Enim</a></h4>
-                        <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in">
-                    <div class="box">
-                        <div class="icon"><a href=""><i class="bi bi-calendar4-week"></i></a></div>
-                        <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-                        <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-                    </div>
-                </div>
+
+                @endforeach
             </div>
 
         </div>
     </section><!-- End Services Section -->
 
-    <!-- ======= Call To Action Section ======= -->
-    <section id="call-to-action">
-        <div class="container">
-            <div class="row" data-aos="zoom-in">
-                <div class="col-lg-9 text-center text-lg-start">
-                    <h3 class="cta-title">Call To Action</h3>
-                    <p class="cta-text"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-                <div class="col-lg-3 cta-btn-container text-center">
-                    <a class="cta-btn align-middle" href="#">Call To Action</a>
-                </div>
-            </div>
-
-        </div>
-    </section><!-- End Call To Action Section -->
 
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio">
         <div class="container" data-aos="fade-up">
             <div class="section-header">
-                <h3 class="section-title">Portfolio</h3>
-                <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+                <h3 class="section-title">Proprietà</h3>
+                <p class="section-description">In questa sezione sono elencate le proprietà del Patriziato</p>
             </div>
 
             <div class="row" data-aos="fade-up" data-aos-delay="100">
@@ -219,8 +145,9 @@
 
             <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
 
+                @foreach($estates as $single)
                 <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{!! url('images/portfolio/portfolio-1.jpg') !!}" class="img-fluid" alt="">
+                    <img src="{{$single->link}}" class="img-fluid" alt="">
                     <div class="portfolio-info">
                         <h4>App 1</h4>
                         <p>App</p>
@@ -228,6 +155,7 @@
                         <a href="{!! url('images/favicon.png') !!}portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
                     </div>
                 </div>
+                @endforeach
 
                 <div class="col-lg-4 col-md-6 portfolio-item filter-web">
                     <img src="{!! url('images/portfolio/portfolio-2.jpg') !!}" class="img-fluid" alt="">
