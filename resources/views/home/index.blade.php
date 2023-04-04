@@ -18,7 +18,7 @@
                 <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                 <li><a class="nav-link scrollto" href="#about">Informazioni</a></li>
                 <li><a class="nav-link scrollto" href="#services">News</a></li>
-                <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+                <li><a class="nav-link scrollto " href="#portfolio">Proprietà</a></li>
                 <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="#">Drop Down 1</a></li>
@@ -44,7 +44,7 @@
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
-<section id="hero">
+<section id="hero" style="background: {!! url('images/bg-estate.jpg') !!} top center;">
     <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
         <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
         <h2>Copyright 2023 MS</h2>
@@ -55,7 +55,7 @@
 <main id="main">
 
     <!-- ======= About Section ======= -->
-    <section id="about">
+    <section id="about" style="background: {!! url('images/about-img.jpg') !!} center top no-repeat;">
         <div class="container" data-aos="fade-up">
             <div class="row about-container">
 
@@ -147,65 +147,15 @@
 
                 @foreach($estates as $single)
                 <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{{$single->link}}" class="img-fluid" alt="">
+                    <img src="{{asset('images/proprieta/').'/'.$single->link}}" class="img-fluid" alt="">
                     <div class="portfolio-info">
-                        <h4>App 1</h4>
-                        <p>App</p>
-                        <a href="{!! url('images/portfolio/portfolio-1.jpg') !!}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
-                        <a href="{!! url('images/favicon.png') !!}portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+                        <h4>{{$single->title}}</h4>
+                        <p>{{$single->description}}</p>
+                        <a href="{{asset('images/proprieta/').'/'.$single->link}}" data-gallery="portfolioGallery"
+                           class="portfolio-lightbox preview-link" title="{{$single->title}}"><i class="bx bx-plus"></i></a>
                     </div>
                 </div>
                 @endforeach
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <img src="{!! url('images/portfolio/portfolio-2.jpg') !!}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 3</h4>
-                        <p>Web</p>
-                        <a href="{!! url('images/portfolio/portfolio-2.jpg') !!}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{!! url('images/portfolio/portfolio-2.jpg') !!}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 2</h4>
-                        <p>App</p>
-                        <a href="{!! url('images/portfolio/portfolio-3.jpg') !!}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                    <img src="{!! url('images/portfolio/portfolio-4.jpg') !!}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 2</h4>
-                        <p>Card</p>
-                        <a href="{!! url('images/portfolio/portfolio-4.jpg') !!}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <img src="{!! url('images/portfolio/portfolio-5.jpg') !!}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 2</h4>
-                        <p>Web</p>
-                        <a href="{!! url('images/portfolio/portfolio-5.jpg') !!}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{!! url('images/portfolio/portfolio-6.jpg') !!}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 3</h4>
-                        <p>App</p>
-                        <a href="{!! url('images/portfolio/portfolio-6.jpg') !!}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-                    </div>
-                </div>
             </div>
 
         </div>
