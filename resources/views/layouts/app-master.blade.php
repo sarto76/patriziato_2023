@@ -58,7 +58,7 @@
 <main class="container">
     @yield('content')
 </main>
-
+<script src="{!! url('assets/jquery/jquery-3.6.4.min.js') !!}"></script>
 <script src="{!! url('assets/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
 
 </body>

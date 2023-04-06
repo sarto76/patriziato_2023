@@ -19,7 +19,7 @@
                 <li><a class="nav-link scrollto" href="#about">Informazioni</a></li>
                 <li><a class="nav-link scrollto" href="#services">News</a></li>
                 <li><a class="nav-link scrollto " href="#portfolio">Proprietà</a></li>
-                <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+               {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="#">Drop Down 1</a></li>
                         <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
@@ -35,8 +35,8 @@
                         <li><a href="#">Drop Down 3</a></li>
                         <li><a href="#">Drop Down 4</a></li>
                     </ul>
-                </li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                </li>--}}
+                <li><a class="nav-link scrollto" href="#contact">Contatto</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -45,7 +45,7 @@
 
 <!-- ======= Hero Section ======= -->
 <section id="hero" style="background: {!! url('images/bg-estate.jpg') !!} top center;">
-    <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
+    <div class="hero-container" style="background: '<?php echo url('images/bg-estate.jpg'); ?>'" data-aos="zoom-in" data-aos-delay="100">
         <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
         <h2>Copyright 2023 MS</h2>
         <a href="#about" class="btn-get-started">Inizio</a>
@@ -167,13 +167,11 @@
     <section id="contact">
         <div class="container">
             <div class="section-header">
-                <h3 class="section-title">Contact</h3>
-                <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+                <h3 class="section-title">Contatto</h3>
+                <p class="section-description">Informazioni di contatto:</p>
             </div>
         </div>
 
-        <!-- Uncomment below if you wan to use dynamic maps -->
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22864.11283411948!2d-73.96468908098944!3d40.630720240038435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbg!4v1540447494452" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
 
         <div class="container mt-5">
             <div class="row justify-content-center">
@@ -183,27 +181,20 @@
                     <div class="info">
                         <div>
                             <i class="bi bi-geo-alt"></i>
-                            <p>A108 Adam Street<br>New York, NY 535022</p>
+                            <p>Patriziato<br>6685 Bosco Gurin</p>
                         </div>
 
                         <div>
                             <i class="bi bi-envelope"></i>
-                            <p>info@example.com</p>
+                            <p>patriziato.bosco@gmail.com</p>
                         </div>
 
-                        <div>
+                       {{-- <div>
                             <i class="bi bi-phone"></i>
                             <p>+1 5589 55488 55s</p>
-                        </div>
+                        </div>--}}
                     </div>
 
-                    <div class="social-links">
-                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                    </div>
 
                 </div>
 
@@ -211,23 +202,23 @@
                     <div class="form">
                         <form action="forms/contact.php" method="post" role="form" class="php-email-form">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Nome" required>
                             </div>
                             <div class="form-group mt-3">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                             </div>
                             <div class="form-group mt-3">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Titolo" required>
                             </div>
                             <div class="form-group mt-3">
-                                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                                <textarea class="form-control" name="message" rows="5" placeholder="Messaggio" required></textarea>
                             </div>
                             <div class="my-3">
                                 <div class="loading">Loading</div>
                                 <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                                <div class="sent-message">Il suo messaggio è stato inviato. Grazie!</div>
                             </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
+                            <div class="text-center"><button type="submit">Invio messaggio</button></div>
                         </form>
                     </div>
                 </div>
