@@ -1,7 +1,6 @@
 @extends('layouts.app-master')
 
 @section('content')
-
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -40,7 +39,7 @@
                         </div>
                         @auth
                             <div class="m-1">
-                                <form action="{{ route('news.destroy',$single->id) }}" method="Post">
+                                <form action="{{ route('news.destroy',$single->id) }}" method="Post" onsubmit="return confirmDelete();">
                                     <a class="btn btn-primary" href="{{ route('news.edit',$single->id) }}">Edit</a>
                                     @csrf
                                     @method('DELETE')
@@ -53,9 +52,19 @@
 
             @endforeach
         </div>
+
     </div>
     {!! $news->links() !!}
 
 
 
+
+
+
 @endsection
+
+<script>
+    function confirmDelete() {
+        return confirm('Sei sicuro di voler eliminare questa news?');
+    }
+</script>

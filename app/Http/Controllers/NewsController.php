@@ -47,4 +47,10 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('success','News modificata.');
     }
+    public function destroy(News $news)
+    {
+        $news = News::find($news->id);
+        $news->delete();
+        return redirect()->route('news.index')->with('success','News eliminata.');
+    }
 }
