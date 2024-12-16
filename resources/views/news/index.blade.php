@@ -32,7 +32,9 @@
                         <div class="card-body">
 
 
+
                             <p class="card-text">{{$single->text}}</p>
+                            <p class="card-text">Stato: {{($single->active== 1)?"Attiva": "Non attiva"}}</p>
                             <p class="card-text"><small class="text-muted">Caricata
                                     il: {{date('d.m.Y', strtotime($single->created_at))}}</small></p>
                         </div>

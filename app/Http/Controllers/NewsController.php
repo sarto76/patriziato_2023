@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
     public function index(){
-        $news = News::query()->where("active",1)->orderBy("created_at",'desc')->paginate(10);
+        $news = News::query()->orderBy("created_at",'desc')->paginate(10);
         return view('news.index',compact('news'));
     }
 
@@ -27,5 +27,24 @@ class NewsController extends Controller
         News::create($request->post());
 
         return redirect()->route('news.index')->with('success','News creata.');
+    }
+    public function edit(News $news)
+    {
+        $news = News::find($news->id);
+        return view('news.edit',compact('news'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+            'active' => 'required',
+        ]);
+
+        $news = News::find($id);
+        $news->update($request->all());
+
+        return redirect()->route('news.index')->with('success','News modificata.');
     }
 }

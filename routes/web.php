@@ -25,7 +25,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::post('/news', 'NewsController@store')->name('news.store');
     Route::get('/news/{news}/edit', 'NewsController@edit')->name('news.edit');
     Route::delete('/news/{news}', 'NewsController@destroy')->name('news.destroy');
-    Route::put('news/{news}','NewsController@update')->name('news.update');
+    Route::put('news/{id}','NewsController@update')->name('news.update');
 
    /* Route::resource('news', NewsController::class);*/
 
