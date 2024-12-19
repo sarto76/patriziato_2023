@@ -37,6 +37,17 @@
                     </ul>
                 </li>--}}
                 <li><a class="nav-link scrollto" href="#contact">Contatto</a></li>
+
+                @auth
+                    {{auth()->user()->name}}
+                    <li><a href="{{ route('logout.perform') }}" class="nav-link scrollto">Logout</a></li>
+                @endauth
+
+                @guest
+                    <li><a href="#login" class="nav-link scrollto">Login</a></li>
+                @endguest
+
+
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -47,7 +58,7 @@
 <section id="hero" style="background: {!! url('images/bg-estate.jpg') !!} top center;">
     <div class="hero-container" style="background: '<?php echo url('images/bg-estate.jpg'); ?>'" data-aos="zoom-in" data-aos-delay="100">
         <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
-        <h2>Copyright 2023 MS</h2>
+        <h2>Copyright 2025 MS</h2>
         <a href="#about" class="btn-get-started">Inizio</a>
     </div>
 </section><!-- End Hero Section -->
@@ -59,7 +70,7 @@
         <div class="container" data-aos="fade-up">
             <div class="row about-container">
 
-                <div class="col-lg-6 content order-lg-1 order-2">
+
                     <h2 class="title">Patriziato di Bosco Gurin</h2>
                     <p>
                         Bosco Gurin, il più alto villaggio delle nostre montagne ticinesi, fin dal tempo remoto delle
@@ -76,7 +87,7 @@
                     </div>
                     @endforeach
 
-                </div>
+
 
                 <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div>
             </div>
@@ -228,6 +239,44 @@
         </div>
     </section><!-- End Contact Section -->
 
+    <!-- ======= login Section ======= -->
+    <section id="login" class="login">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header mt-5">
+                <h3 class="section-title">Login</h3>
+                <p class="section-description">Inserisci i tuoi dati di accesso</p>
+            </div>
+
+            <form method="post" action="{{ route('login.perform') }}">
+
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
+                @include('layouts.partials.messages')
+
+                <div class="form-group form-floating mb-3">
+                    <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" required="required" autofocus>
+                    <label for="floatingName">username</label>
+                    @if ($errors->has('username'))
+                        <span class="text-danger text-left">{{ $errors->first('username') }}</span>
+                    @endif
+                </div>
+
+                <div class="form-group form-floating mb-3">
+                    <input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Password" required="required">
+                    <label for="floatingPassword">Password</label>
+                    @if ($errors->has('password'))
+                        <span class="text-danger text-left">{{ $errors->first('password') }}</span>
+                    @endif
+                </div>
+
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+
+                @include('auth.partials.copy')
+            </form>
+
+        </div>
+    </section><!-- End login Section -->
+
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
@@ -240,7 +289,7 @@
 
     <div class="container">
         <div class="copyright">
-            &copy; Copyright <strong>Regna</strong>. All Rights Reserved
+            &copy; Copyright <strong>MS</strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!--

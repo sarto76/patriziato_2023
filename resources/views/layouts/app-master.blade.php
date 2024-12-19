@@ -17,7 +17,8 @@
     <link href="{!! url('images/apple-touch-icon.png') !!}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700"
+          rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="{!! url('assets/regna/aos/aos.css') !!}" rel="stylesheet">
@@ -28,7 +29,6 @@
     <!-- Template Main CSS File -->
     <link href="{!! url('assets/regna/css/style.css') !!}" rel="stylesheet">
     <!----------------------------------------------------------------------------------- fine regna core ----------------------------------------------------------------->
-
 
 
     <style>
@@ -52,8 +52,9 @@
     <link href="{!! url('assets/css/app.css') !!}" rel="stylesheet">
 </head>
 <body>
-
-@include('layouts.partials.navbar')
+@auth
+    @include('layouts.partials.navbar')
+@endauth
 
 <main class="container">
     @yield('content')

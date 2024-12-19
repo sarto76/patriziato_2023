@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\news;
+use App\Models\News;
 use App\Models\Member;
 use App\Models\Estate;
 use Illuminate\Http\Request;
