@@ -17,7 +17,9 @@ use App\Http\Controllers\NewsController;
 Route::group(['namespace' => 'App\Http\Controllers'], function()
 {
     Route::get('/', 'HomeController@index')->name('home.index');
-    Route::get('/info', 'HomeController@info')->name('home.info');
+
+    Route::get('/info', 'InfoController@index')->name('info.index');
+    Route::get('/info/{id}', 'InfoController@update')->name('info.update');
 
 
     Route::get('/news', 'NewsController@index')->name('news.index');

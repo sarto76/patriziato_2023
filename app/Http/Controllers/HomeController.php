@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
-use App\Models\Member;
 use App\Models\Estate;
-use Illuminate\Http\Request;
+use App\Models\Info;
+use App\Models\Member;
+use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -17,8 +17,5 @@ class HomeController extends Controller
         return view('home.index')->with('news', $news)->with('member', $member)->with('estates', $estates);
     }
 
-    public function info()
-    {
-        return view('info.index');
-    }
+
 }

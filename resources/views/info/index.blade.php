@@ -1,9 +1,19 @@
 @extends('layouts.app-master')
 
 @section('content')
-    <div class="bg-light p-5 rounded">
+    @guest
+        <div class="bg-light p-5 rounded">
             <h1>Informazioni</h1>
-            <p class="lead">Bosco Gurin, il più alto villaggio delle nostre montagne ticinesi, fin dal tempo remoto delle molteplici migrazioni di popoli attraverso i passi delle alpi nostre,
-                si eresse in comunità di libera gente svizzera, formata da famiglie walser.</p>
-    </div>
+            <p class="lead">{{$info->text}}</p>
+        </div>
+    @endguest
+    @auth
+
+        <form action="{{ route('info.update', ['id' => $info->id]) }}" method="Post">
+            <div class="bg-light p-5 rounded">
+                <h1>Informazioni</h1>
+                <textarea cols="100">{{$info->text}}</textarea>
+            </div>
+        </form>
+    @endauth
 @endsection
