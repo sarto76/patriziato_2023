@@ -34,9 +34,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/documents', 'DocumentsController@index')->name('documents.index');
     Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
     Route::post('/documents', 'DocumentsController@store')->name('documents.store');
-    Route::get('/documents/{documents}/edit', 'DocumentsController@edit')->name('documents.edit');
     Route::delete('/documents/{documents}', 'DocumentsController@destroy')->name('documents.destroy');
-    Route::put('documents/{id}','DocumentsController@update')->name('documents.update');
+
+    Route::get('/properties', 'PropertiesController@index')->name('properties.index');
+    Route::get('/properties/create', 'PropertiesController@create')->name('properties.create');
+    Route::post('/properties', 'PropertiesController@store')->name('properties.store');
+    Route::delete('/properties/{properties}', 'PropertiesController@destroy')->name('properties.destroy');
 
 
 

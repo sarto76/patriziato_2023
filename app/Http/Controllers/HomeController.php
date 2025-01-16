@@ -7,6 +7,7 @@ use App\Models\Info;
 use App\Models\Member;
 use App\Models\News;
 use App\Models\Documents;
+use App\Models\Property;
 
 
 class HomeController extends Controller
@@ -17,8 +18,11 @@ class HomeController extends Controller
         $member = Member::query()->paginate(10);
         $estates = Estate::query()->paginate(10);
         $info = Info::first();
-        $documents = Documents::query()->orderBy("created_at",'desc')->paginate(10);
-        return view('home.index')->with('news', $news)->with('member', $member)->with('estates', $estates)->with('info', $info)->with('documents', $documents);
+        $documents = Documents::query()->orderBy("created_at",'desc')->get();
+        $properties = Property::query()->orderBy("created_at",'desc')->get();
+        return view('home.index')->with('news', $news)->with('member', $member)->with('estates', $estates)->with('info', $info)
+            ->with('documents', $documents)
+            ->with('properties', $properties);
     }
 
 

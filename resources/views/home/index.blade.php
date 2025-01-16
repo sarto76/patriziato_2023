@@ -19,7 +19,7 @@
                     <li><a class="nav-link scrollto" href="#about">Informazioni</a></li>
                     <li><a class="nav-link scrollto" href="#services">News</a></li>
                     <li><a class="nav-link scrollto" href="#documents">Documenti</a></li>
-                    <li><a class="nav-link scrollto " href="#portfolio">Proprietà</a></li>
+                    <li><a class="nav-link scrollto " href="#properties">Proprietà</a></li>
                     {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                          <ul>
                              <li><a href="#">Drop Down 1</a></li>
@@ -139,7 +139,7 @@
             <div class="container" data-aos="fade-up">
                 <div class="section-header">
                     <h3 class="section-title">Documenti</h3>
-                    <p class="section-description">In questa trovate i dicumenti da scaricare</p>
+                    <p class="section-description">In questa trovate i documenti da scaricare</p>
                 </div>
 
                 <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
@@ -162,43 +162,35 @@
         </section><!-- End documenti Section -->
 
         <!-- ======= proprietà Section ======= -->
-        <section id="portfolio" class="portfolio">
+        <section id="properties" class="portfolio">
             <div class="container" data-aos="fade-up">
                 <div class="section-header">
                     <h3 class="section-title">Proprietà</h3>
-                    <p class="section-description">In questa sezione sono elencate le proprietà del Patriziato</p>
-                </div>
-
-                <div class="row" data-aos="fade-up" data-aos-delay="100">
-                    <div class="col-lg-12 d-flex justify-content-center">
-                        <ul id="portfolio-flters">
-                            <li data-filter="*" class="filter-active">All</li>
-                            <li data-filter=".filter-app">App</li>
-                            <li data-filter=".filter-card">Card</li>
-                            <li data-filter=".filter-web">Web</li>
-                        </ul>
-                    </div>
+                    <p class="section-description">In questa trovate le proprietà del Patriziato</p>
                 </div>
 
                 <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-                    @foreach($estates as $single)
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                            <img src="{{asset('images/proprieta/').'/'.$single->link}}" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>{{$single->title}}</h4>
-                                <p>{{$single->description}}</p>
-                                <a href="{{asset('images/proprieta/').'/'.$single->link}}"
-                                   data-gallery="portfolioGallery"
-                                   class="portfolio-lightbox preview-link" title="{{$single->title}}"><i
-                                        class="bx bx-plus"></i></a>
+                    @foreach($properties as $single)
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app card m-2 p-2">
+                            <div>
+                                <h5 class="card-header">{{$single->title}}</h5>
+                                <div class="card-body">
+                                    <p>{{$single->description}}</p>
+                                    <img
+                                        src="{{ asset('storage/properties/' . $single->file) }}"
+                                        alt="Document image"
+                                        class="img-fluid"
+                                        style="max-width: 100%; height: auto;"
+                                    />
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
 
             </div>
-        </section><!-- End Portfolio Section -->
+        </section>
+        <!-- End property Section -->
 
 
         <!-- ======= Contact Section ======= -->
