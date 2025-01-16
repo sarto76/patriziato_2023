@@ -142,9 +142,7 @@
                     <p class="section-description">In questa trovate i dicumenti da scaricare</p>
                 </div>
 
-
                 <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
                     @foreach($documents as $single)
                         <div class="col-lg-4 col-md-6 portfolio-item filter-app card m-2 p-2">
                             <div>

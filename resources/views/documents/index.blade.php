@@ -40,7 +40,6 @@
                         @auth
                             <div class="m-1">
                                 <form action="{{ route('documents.destroy',$single->id) }}" method="Post" onsubmit="return confirmDelete();">
-                                    <a class="btn btn-primary" href="{{ route('documents.edit',$single->id) }}">Edit</a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -65,6 +64,6 @@
 
 <script>
     function confirmDelete() {
-        return confirm('Sei sicuro di voler eliminare questa news?');
+        return confirm('Sei sicuro di voler eliminare questo documento?');
     }
 </script>

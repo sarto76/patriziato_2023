@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Documents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentsController extends Controller
 {
@@ -54,32 +55,16 @@ class DocumentsController extends Controller
 
         return redirect()->route('documents.create', $document->id)->with('success','Documento creato.');
     }
-    public function edit(Documents $document)
-    {
-        $document = Documents::find($document->id);
-        return view('Documents.edit',compact('document'));
-    }
 
-    public function update(Request $request, $id)
+    public function destroy($id)
     {
-        $request->validate([
-            'title' => 'required|text',
-            'description' => 'required|text',
-            'file' => 'required|file',
-        ], [
-            'title.required' => 'Il titolo è obbligatorio.',
-            'description.required' => 'La descrizione è obbligatoria.',
-            'file.required' => 'Il file è obbligatorio.',
-        ]);
-
         $document = Documents::find($id);
-        $document->update($request->all());
 
-        return redirect()->route('documents.edit', $document->id)->with('success','Documento modificato.');
-    }
-    public function destroy(Documents $document)
-    {
-        $document = Documents::find($document->id);
+
+        if (Storage::disk('public')->exists('documents/' . $document->file)) {
+            Storage::disk('public')->delete('documents/' . $document->file);
+        }
+
         $document->delete();
         return redirect()->route('documents.index')->with('success','Documento eliminato.');
     }
