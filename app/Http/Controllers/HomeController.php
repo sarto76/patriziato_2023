@@ -6,6 +6,7 @@ use App\Models\Estate;
 use App\Models\Info;
 use App\Models\Member;
 use App\Models\News;
+use App\Models\Documents;
 
 
 class HomeController extends Controller
@@ -16,7 +17,8 @@ class HomeController extends Controller
         $member = Member::query()->paginate(10);
         $estates = Estate::query()->paginate(10);
         $info = Info::first();
-        return view('home.index')->with('news', $news)->with('member', $member)->with('estates', $estates)->with('info', $info);
+        $documents = Documents::query()->orderBy("created_at",'desc')->paginate(10);
+        return view('home.index')->with('news', $news)->with('member', $member)->with('estates', $estates)->with('info', $info)->with('documents', $documents);
     }
 
 
