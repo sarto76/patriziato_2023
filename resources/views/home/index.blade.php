@@ -73,9 +73,7 @@
 
                     <h2 class="title">Patriziato di Bosco Gurin</h2>
                     <p>
-                        Bosco Gurin, il più alto villaggio delle nostre montagne ticinesi, fin dal tempo remoto delle
-                        molteplici migrazioni di popoli attraverso i passi delle alpi nostre,
-                        si eresse in comunità  di libera gente svizzera, formata da famiglie walser.
+                        {{$info->text}}
                     </p>
 
                     <h2 class="title">Componenti dell'Ufficio patriziale</h2>

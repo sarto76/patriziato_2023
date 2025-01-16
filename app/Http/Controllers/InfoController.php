@@ -25,7 +25,7 @@ class InfoController extends Controller
         ]);
 
         $news = Info::find($id);
-        $news->update($request->all());
+        $news->update($request->only('text'));
 
         return redirect()->route('info.index')->with('success','Info modificata.');
     }

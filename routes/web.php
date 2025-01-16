@@ -29,6 +29,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::delete('/news/{news}', 'NewsController@destroy')->name('news.destroy');
     Route::put('news/{id}','NewsController@update')->name('news.update');
 
+    Route::put('info/{id}','InfoController@update')->name('info.update');
+
    /* Route::resource('news', NewsController::class);*/
 
 

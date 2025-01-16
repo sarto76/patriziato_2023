@@ -15,18 +15,25 @@ class NewsController extends Controller
     {
         return view('news.create');
     }
+
+
+
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required',
             'text' => 'required',
             'active' => 'required',
+        ], [
+            'title.required' => 'Il titolo è obbligatorio.',
+            'text.required' => 'Il testo è obbligatorio.',
+            'active.required' => 'Lo stato attivo è obbligatorio.',
         ]);
 
 
-        News::create($request->post());
+        $news = News::create($request->post());
 
-        return redirect()->route('news.index')->with('success','News creata.');
+        return redirect()->route('news.create', $news->id)->with('success','News creata.');
     }
     public function edit(News $news)
     {
@@ -45,7 +52,7 @@ class NewsController extends Controller
         $news = News::find($id);
         $news->update($request->all());
 
-        return redirect()->route('news.index')->with('success','News modificata.');
+        return redirect()->route('news.edit', $news->id)->with('success','News modificata.');
     }
     public function destroy(News $news)
     {

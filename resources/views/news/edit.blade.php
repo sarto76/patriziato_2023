@@ -7,9 +7,6 @@
             <div class="pull-left mb-2">
                 <h2>Edit News</h2>
             </div>
-            <div class="pull-right mb-2">
-                <a class="btn btn-success" href="{{ route('news.index') }}"> Indietro</a>
-            </div>
         </div>
     </div>
 
@@ -64,7 +61,11 @@
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary ml-3 mt-1">Modifica</button>
+            <div class="pull-right mb-2 mt-2">
+                <a class="btn btn-success" href="{{ route('news.index') }}"> Indietro</a>
+                <button type="submit" class="btn btn-primary ml-3 mt-1">Modifica</button>
+            </div>
+
         </div>
     </form>
 
