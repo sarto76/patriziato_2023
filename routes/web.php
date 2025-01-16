@@ -31,7 +31,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::put('info/{id}','InfoController@update')->name('info.update');
 
-   /* Route::resource('news', NewsController::class);*/
+    Route::get('/documents', 'DocumentsController@index')->name('documents.index');
+    Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
+    Route::post('/documents', 'DocumentsController@store')->name('documents.store');
+    Route::get('/documents/{documents}/edit', 'DocumentsController@edit')->name('documents.edit');
+    Route::delete('/documents/{documents}', 'DocumentsController@destroy')->name('documents.destroy');
+    Route::put('documents/{id}','DocumentsController@update')->name('documents.update');
 
 
 

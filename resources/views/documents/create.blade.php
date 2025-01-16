@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left mb-2 mt-3">
-                <h2>Aggiungi News</h2>
+                <h2>Aggiungi documento</h2>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -36,32 +36,25 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Testo:</strong>
-                    <input type="text" name="text" class="form-control" placeholder="Testo">
+                    <strong>Descrizione:</strong>
+                    <input type="text" name="text" class="form-control" placeholder="Descrizione">
                     @error('text')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" name="active" value="1" class="form-control" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Attivo
-                    </label>
+                <div class="form-group">
+                    <strong>File:</strong>
+                    <input type="file" name="file" class="form-control" placeholder="File">
+                    @error('file')
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    @enderror
                 </div>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" name="active" value="0" class="form-control" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Non attivo
-                    </label>
-                </div>
-                @error('active')
-                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                @enderror
             </div>
+
             <div class="pull-right mb-2">
-                <a class="btn btn-success" href="{{ route('news.index') }}"> Indietro</a>
+                <a class="btn btn-success" href="{{ route('documents.index') }}"> Indietro</a>
                 <button type="submit" class="btn btn-primary ml-3 mt-1">Aggiungi</button>
             </div>
         </div>

@@ -3,12 +3,12 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-left mt-3">
-                <h2>News</h2>
+            <div class="pull-left mt-2">
+                <h2>Documenti</h2>
             </div>
             @auth
-                <div class="pull-right mb-2">
-                    <a class="btn btn-success" href="{{ route('news.create') }}"> Nuova News</a>
+                <div class="pull-right mb-3">
+                    <a class="btn btn-success" href="{{ route('documents.create') }}"> Nuovo Documento</a>
                 </div>
             @endauth
         </div>
@@ -24,7 +24,7 @@
     <div class="m-2">
 
         <div class="row">
-            @foreach ($news as $single)
+            @foreach ($documents as $single)
                 <div class="col-sm-6 mb-1">
                     <div class="card">
                         <h5 class="card-header">{{$single->title}}</h5>
@@ -32,15 +32,15 @@
 
 
 
-                            <p class="card-text">{{$single->text}}</p>
-                            <p class="card-text">Stato: {{($single->active== 1)?"Attiva": "Non attiva"}}</p>
-                            <p class="card-text"><small class="text-muted">Caricata
+                            <p class="card-text">{{$single->description}}</p>
+                            <p class="card-text"><a href="{{$single->file}}">{{$single->file}}</a></p>
+                            <p class="card-text"><small class="text-muted">Caricato
                                     il: {{date('d.m.Y', strtotime($single->created_at))}}</small></p>
                         </div>
                         @auth
                             <div class="m-1">
-                                <form action="{{ route('news.destroy',$single->id) }}" method="Post" onsubmit="return confirmDelete();">
-                                    <a class="btn btn-primary" href="{{ route('news.edit',$single->id) }}">Edit</a>
+                                <form action="{{ route('documents.destroy',$single->id) }}" method="Post" onsubmit="return confirmDelete();">
+                                    <a class="btn btn-primary" href="{{ route('documents.edit',$single->id) }}">Edit</a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -54,7 +54,7 @@
         </div>
 
     </div>
-    {!! $news->links() !!}
+    {!! $documents->links() !!}
 
 
 
