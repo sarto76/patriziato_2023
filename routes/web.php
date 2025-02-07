@@ -41,6 +41,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::post('/properties', 'PropertiesController@store')->name('properties.store');
     Route::delete('/properties/{properties}', 'PropertiesController@destroy')->name('properties.destroy');
 
+    Route::get('/link', 'LinkController@index')->name('link.index');
+    Route::get('/link/create', 'LinkController@create')->name('link.create');
+    Route::post('/link', 'LinkController@store')->name('link.store');
+    Route::get('/link/{link}/edit', 'LinkController@edit')->name('link.edit');
+    Route::delete('/link/{link}', 'LinkController@destroy')->name('link.destroy');
+    Route::put('link/{id}','LinkController@update')->name('link.update');
+
 
 
 

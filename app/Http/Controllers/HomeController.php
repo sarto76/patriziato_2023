@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estate;
 use App\Models\Info;
+use App\Models\Link;
 use App\Models\Member;
 use App\Models\News;
 use App\Models\Documents;
@@ -20,9 +21,11 @@ class HomeController extends Controller
         $info = Info::first();
         $documents = Documents::query()->orderBy("created_at",'desc')->get();
         $properties = Property::query()->orderBy("created_at",'desc')->get();
+        $links = Link::query()->paginate(10);
         return view('home.index')->with('news', $news)->with('member', $member)->with('estates', $estates)->with('info', $info)
             ->with('documents', $documents)
-            ->with('properties', $properties);
+            ->with('properties', $properties)
+            ->with('links', $links);
     }
 
 

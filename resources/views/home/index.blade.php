@@ -18,6 +18,7 @@
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                     <li><a class="nav-link scrollto" href="#about">Informazioni</a></li>
                     <li><a class="nav-link scrollto" href="#services">News</a></li>
+                    <li><a class="nav-link scrollto" href="#links">Links</a></li>
                     <li><a class="nav-link scrollto" href="#documents">Documenti</a></li>
                     <li><a class="nav-link scrollto " href="#properties">Proprietà</a></li>
                     {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -134,8 +135,34 @@
             </div>
         </section><!-- End Services Section -->
 
+        <!-- ======= link Section ======= -->
+        <section id="links" class="portfolio mt-5">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h3 class="section-title">Link utili</h3>
+                    <p class="section-description">In questa trovate alcuni link utili</p>
+                </div>
+
+                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+                    @foreach($links as $single)
+                        <div class="col-lg-4 col-md-6 portfolio-item filter-app card m-2 p-2">
+                            <div>
+                                <h5 class="card-header">{{$single->name}}</h5>
+                                <div class="card-body">
+                                    <a href="{{$single->url}}" target="_blank">{{$single->url}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+        </section><!-- End link Section -->
+
+
+
         <!-- ======= documenti Section ======= -->
-        <section id="documents" class="portfolio">
+        <section id="documents" class="portfolio mt-5">
             <div class="container" data-aos="fade-up">
                 <div class="section-header">
                     <h3 class="section-title">Documenti</h3>
@@ -162,7 +189,7 @@
         </section><!-- End documenti Section -->
 
         <!-- ======= proprietà Section ======= -->
-        <section id="properties" class="portfolio">
+        <section id="properties" class="portfolio mt-5">
             <div class="container" data-aos="fade-up">
                 <div class="section-header">
                     <h3 class="section-title">Proprietà</h3>
