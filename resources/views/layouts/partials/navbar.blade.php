@@ -8,6 +8,7 @@
                 <li><a href="{{ route('documents.index') }}" class="nav-link px-2 {{ (request()->is('document*')) ? 'text-secondary' : 'text-white' }} ">Documenti</a></li>
                 <li><a href="{{ route('link.index') }}" class="nav-link px-2 {{ (request()->is('link*')) ? 'text-secondary' : 'text-white' }} ">Link</a></li>
                 <li><a href="{{ route('properties.index') }}" class="nav-link px-2 {{ (request()->is('propert*')) ? 'text-secondary' : 'text-white' }} ">Proprietà</a></li>
+                <li><a href="{{ route('patrizi.index') }}" class="nav-link px-2 {{ (request()->is('patrizi*')) ? 'text-secondary' : 'text-white' }} ">Catalogo</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Contatti</a></li>
 
                 @auth

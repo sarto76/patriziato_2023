@@ -52,7 +52,8 @@
         </div>
 
     </div>
-    {!! $links->links() !!}
+
+    {!! $links->links('pagination::bootstrap-4') !!}
 
 
 

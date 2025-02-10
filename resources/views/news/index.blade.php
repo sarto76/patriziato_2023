@@ -54,7 +54,8 @@
         </div>
 
     </div>
-    {!! $news->links() !!}
+    {!! $news->links('pagination::bootstrap-4') !!}
+
 
 
 

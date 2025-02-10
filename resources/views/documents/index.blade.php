@@ -53,8 +53,8 @@
         </div>
 
     </div>
-    {!! $documents->links() !!}
 
+    {!! $documents->links('pagination::bootstrap-4') !!}
 
 
 

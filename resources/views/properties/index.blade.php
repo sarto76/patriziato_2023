@@ -53,8 +53,7 @@
         </div>
 
     </div>
-    {!! $properties->links() !!}
-
+    {!! $properties->links('pagination::bootstrap-4') !!}
 
 
 
