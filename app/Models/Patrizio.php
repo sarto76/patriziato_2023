@@ -9,6 +9,8 @@ class Patrizio extends Model
 {
     protected $table = 'patrizi';
     use HasFactory;
-    protected $fillable = ['name','surname','email','phone','address','city','zip','province','region','country','note','active'];
+
+    protected $fillable = ['register_number', 'firstname', 'lastname', 'birth', 'death', 'living', 'note',
+        'patriziato_lost', 'phone', 'email', 'street', 'zip', 'city', 'picture', 'password', 'confirmed'];
 
 }

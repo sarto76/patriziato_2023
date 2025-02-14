@@ -49,7 +49,7 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="{!! url('assets/css/app.css') !!}" rel="stylesheet">
+
 </head>
 <body>
 @auth
@@ -59,7 +59,7 @@
 <main class="container">
     @yield('content')
 </main>
-<script src="{!! url('assets/jquery/jquery-3.6.4.min.js') !!}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Questo è molto importante -->
 <script src="{!! url('assets/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
 
 </body>

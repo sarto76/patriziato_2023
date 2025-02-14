@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 use App\Models\Patrizio;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class PatriziController extends Controller
 {
     public function index(){
-        $patrizi = Patrizio::query()->orderBy("lastname",'asc')->paginate(30);
-        return view('patrizi.index',compact('patrizi'));
+      /*  $patrizi = Patrizio::query()->orderBy("lastname",'asc')->paginate(30);*/
+        return view('patrizi.index');
+    }
+
+    public function getPatriziData()
+    {
+        return DataTables::of(Patrizio::where('living',1)->orderBy('lastname','asc'))->make(true);
     }
 
     public function create()
@@ -35,24 +41,36 @@ class PatriziController extends Controller
 
         return redirect()->route('news.create', $news->id)->with('success','News creata.');
     }
-    public function edit(News $news)
+    public function edit($patrizioId)
     {
-        $news = News::find($news->id);
-        return view('news.edit',compact('news'));
+        $patrizio = Patrizio::find($patrizioId);
+        return view('patrizi.edit',compact('patrizio'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'text' => 'required',
-            'active' => 'required',
+            'register_number' => 'required|numeric',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'birth' => 'required|date',
+            'death' => 'nullable|date',
+            'patriziato_lost' => 'nullable|date',
+            'zip' => 'nullable|numeric',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $news = News::find($id);
-        $news->update($request->all());
+        $patrizio = Patrizio::find($id);
 
-        return redirect()->route('news.edit', $news->id)->with('success','News modificata.');
+        if ($request->hasFile('picture')) {
+            $imageName = time().'.'.$request->picture->extension();
+            $filePath = $request->picture->storeAs('images', $imageName, 'public');
+            $patrizio->picture = $filePath;
+        }
+
+        $patrizio->update($request->except('picture'));
+
+        return redirect()->route('patrizi.edit', $patrizio->id)->with('success','Patrizio modificato.');
     }
     public function destroy(News $news)
     {
