@@ -5,6 +5,7 @@
 
                 <li><a href="{{ route('news.index') }}" class="nav-link px-2 {{ (request()->is('/')) ? 'text-secondary' : 'text-white' }} ">News</a></li>
                 <li><a href="{{ route('info.index') }}" class="nav-link px-2 {{ (request()->is('info*')) ? 'text-secondary' : 'text-white' }} ">Info</a></li>
+                <li><a href="{{ route('component.index') }}" class="nav-link px-2 {{ (request()->is('compone*')) ? 'text-secondary' : 'text-white' }} ">Componenti</a></li>
                 <li><a href="{{ route('documents.index') }}" class="nav-link px-2 {{ (request()->is('document*')) ? 'text-secondary' : 'text-white' }} ">Documenti</a></li>
                 <li><a href="{{ route('link.index') }}" class="nav-link px-2 {{ (request()->is('link*')) ? 'text-secondary' : 'text-white' }} ">Link</a></li>
                 <li><a href="{{ route('properties.index') }}" class="nav-link px-2 {{ (request()->is('propert*')) ? 'text-secondary' : 'text-white' }} ">Proprietà</a></li>

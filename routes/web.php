@@ -57,6 +57,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/patrizi/data', 'PatriziController@getPatriziData')->name('patrizi.data');
 
 
+    Route::get('/component', 'ComponentsController@index')->name('component.index');
+    Route::get('/component/{component}/edit', 'ComponentsController@edit')->name('component.edit');
+    Route::put('component/{id}','ComponentsController@update')->name('component.update');
+
+
 
     Route::group(['middleware' => ['guest']], function() {
         /**

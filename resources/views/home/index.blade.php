@@ -80,8 +80,10 @@
                     </p>
 
                     <h2 class="title">Componenti dell'Ufficio patriziale</h2>
+                    <div class="icon-box w-100" data-aos="fade-up" data-aos-delay="100">
+                    </div>
                     @foreach($member as $single)
-                        <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="icon-box ml-1" data-aos="fade-up" data-aos-delay="100">
                             <div class="icon"><i class="bi bi-briefcase"></i></div>
                             <h4 class="title"><a href="">{{$single->firstname}} {{$single->lastname}}</a></h4>
                             <p class="description">{{$single->role}}</p>
