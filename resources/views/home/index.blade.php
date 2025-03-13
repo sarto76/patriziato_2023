@@ -71,33 +71,35 @@
     <main id="main">
 
         <!-- ======= About Section ======= -->
-        <section id="about" style="background: {!! url('images/about-img.jpg') !!} center top no-repeat;">
-            <div class="container" data-aos="fade-up">
-                <div class="row about-container">
+        <section id="about" class="team section">
 
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Componenti dell'Ufficio patriziale</h2>
+                <p></p>
+            </div><!-- End Section Title -->
 
-                    <h2 class="title">Patriziato di Bosco Gurin</h2>
-                    <p>
-                        {{$info->text}}
-                    </p>
+            <div class="container">
 
-                    <h2 class="title">Componenti dell'Ufficio patriziale</h2>
-                    <div class="icon-box w-100" data-aos="fade-up" data-aos-delay="100">
-                    </div>
+                <div class="row gy-4">
                     @foreach($member as $single)
-                        <div class="icon-box ml-1" data-aos="fade-up" data-aos-delay="100">
-                            <div class="icon"><i class="bi bi-briefcase"></i></div>
-                            <h4 class="title"><a href="">{{$single->firstname}} {{$single->lastname}}</a></h4>
-                            <p class="description">{{$single->role}}</p>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="team-member d-flex align-items-start">
+                            <div class="pic"><img src="{{ asset('images/' . $single->picture) }}" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>{{$single->firstname}} {{$single->lastname}}</h4>
+                                <span>{{$single->role}}</span>
+                                <p></p>
+                            </div>
                         </div>
+                    </div><!-- End Team Member -->
                     @endforeach
-
-
-                    <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div>
                 </div>
 
             </div>
-        </section><!-- End About Section -->
+
+        </section><!-- /Team Section -->
+
 
 
         <!-- ======= News Section ======= -->

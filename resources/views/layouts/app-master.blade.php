@@ -8,6 +8,7 @@
     <meta name="generator" content="Hugo 0.87.0">
     <title>Patriziato di Bosco Gurin</title>
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Bootstrap core CSS -->
     <link href="{!! url('assets/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">
 
