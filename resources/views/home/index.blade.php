@@ -60,7 +60,7 @@
     <section id="hero" style="background: url('{{ asset('storage/properties/bg-estate.jpg') }}') top center;">
 
 
-    <div class="hero-container" style="background: '<?php echo url('images/bg-estate.jpg'); ?>'" data-aos="zoom-in"
+        <div class="hero-container" style="background: '<?php echo url('images/bg-estate.jpg'); ?>'" data-aos="zoom-in"
              data-aos-delay="100">
             <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
             <h2>Copyright 2025 MS</h2>
@@ -83,16 +83,17 @@
 
                 <div class="row gy-4">
                     @foreach($member as $single)
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="team-member d-flex align-items-start">
-                            <div class="pic"><img src="{{ asset('images/' . $single->picture) }}" class="img-fluid" alt=""></div>
-                            <div class="member-info">
-                                <h4>{{$single->firstname}} {{$single->lastname}}</h4>
-                                <span>{{$single->role}}</span>
-                                <p></p>
+                        <div class="col-lg-6 mt-1" data-aos="fade-up" data-aos-delay="100">
+                            <div class="team-member d-flex align-items-start">
+                                <div class="pic"><img src="{{ asset('images/' . $single->picture) }}" class="img-fluid"
+                                                      alt=""></div>
+                                <div class="member-info">
+                                    <h4>{{$single->firstname}} {{$single->lastname}}</h4>
+                                    <span>{{$single->role}}</span>
+                                    <p></p>
+                                </div>
                             </div>
-                        </div>
-                    </div><!-- End Team Member -->
+                        </div><!-- End Team Member -->
                     @endforeach
                 </div>
 
@@ -100,130 +101,185 @@
 
         </section><!-- /Team Section -->
 
+        <!-- services Section -->
+        <section id="services" class="about section">
 
+            <div class="container">
 
-        <!-- ======= News Section ======= -->
-        <section id="services">
-            <div class="container" data-aos="fade-up">
-                <div class="section-header">
-                    <h3 class="section-title">News</h3>
-                    <p class="section-description">Ultimi aggiornamenti dal Patriziato</p>
-                </div>
-                <div class="row">
-                    @foreach ($news as $single)
-                        <div class="col-sm-6 mb-1">
-                            <div class="card">
-                                <h5 class="card-header">{{$single->title}}</h5>
-                                <div class="card-body">
+                <div class="row gy-4">
 
+                    <div class="col-lg-6 position-relative d-flex align-items-center order-lg-last" data-aos="fade-up"
+                         data-aos-delay="200">
+                        <img src="{{ asset('images/news.jpg') }}" class="img-fluid flex-shrink-0" alt="">
+                    </div>
 
-                                    <p class="card-text">{{$single->text}}</p>
-                                    <p class="card-text"><small class="text-muted">Caricata
-                                            il: {{date('d.m.Y', strtotime($single->created_at))}}</small></p>
-                                </div>
-                                @auth
-                                    <div class="m-1">
-                                        <form action="{{ route('news.destroy',$single->id) }}" method="Post">
-                                            <a class="btn btn-primary"
-                                               href="{{ route('news.edit',$single->id) }}">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
+                    <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                        <h3>News</h3>
+                        <p>
+                            Ultimi aggiornamenti dal Patriziato
+                        </p>
+                        <ul>
+                            @foreach ($news as $single)
+                                <li>
+                                    <i class="bi bi-pin-fill"></i>
+                                    <div>
+                                        <h5>{{$single->title}}</h5>
+                                        <p>{{$single->text}}</p>
+                                        <p><small class="text-muted">Caricata
+                                                il: {{date('d.m.Y', strtotime($single->created_at))}}</small></p>
                                     </div>
-                                @endauth
-                            </div>
-                        </div>
+                                </li>
+                            @endforeach
 
-                    @endforeach
+                        </ul>
+                    </div>
+
                 </div>
-
+                <div class="pagination mt-4 d-flex justify-content-center">
+                    {{ $news->appends(['scroll' => 'services'])->links('vendor.pagination.bootstrap-4') }}
+                </div>
             </div>
-        </section><!-- End Services Section -->
 
-        <!-- ======= link Section ======= -->
-        <section id="links" class="portfolio mt-5">
-            <div class="container" data-aos="fade-up">
-                <div class="section-header">
-                    <h3 class="section-title">Link utili</h3>
-                    <p class="section-description">In questa trovate alcuni link utili</p>
+        </section><!-- /services Section -->
+
+        <!-- links Section -->
+        <section id="links" class="about section">
+
+            <div class="container">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-6 position-relative d-flex align-items-center order-lg-last" data-aos="fade-up"
+                         data-aos-delay="200">
+                        <img src="{{ asset('images/link.png') }}" class="img-fluid flex-shrink-0" alt="">
+                    </div>
+
+                    <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Link</h3>
+                        <p>
+                            Link Utili
+                        </p>
+                        <ul>
+                            @foreach ($links as $single)
+                                <li>
+                                    <i class="bi bi-share-fill"></i>
+                                    <div>
+                                        <h5>{{$single->name}}</h5>
+                                        <p><a href="{{$single->url}}" target="_blank">{{$single->url}}</a></p>
+
+                                    </div>
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+
                 </div>
-
-                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-                    @foreach($links as $single)
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app card m-2 p-2">
-                            <div>
-                                <h5 class="card-header">{{$single->name}}</h5>
-                                <div class="card-body">
-                                    <a href="{{$single->url}}" target="_blank">{{$single->url}}</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
             </div>
-        </section><!-- End link Section -->
 
+        </section><!-- /link Section -->
 
 
         <!-- ======= documenti Section ======= -->
-        <section id="documents" class="portfolio mt-5">
+        <section id="documents" class="team section portfolio mt-5">
             <div class="container" data-aos="fade-up">
-                <div class="section-header">
-                    <h3 class="section-title">Documenti</h3>
-                    <p class="section-description">In questa trovate i documenti da scaricare</p>
+                <div class="section-header text-center mb-5">
+                    <h3 class="section-title">Documenti Scaricabili</h3>
+                    <p class="section-description">Trova e scarica i documenti utili del Patriziato.</p>
                 </div>
 
-                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="container">
+
+                    <div class="row gy-4">
+                        @foreach($documents as $single)
+                            <div class="col-lg-6 mt-1" data-aos="fade-up" data-aos-delay="100">
+                                <div class="team-member d-flex align-items-start">
+                                    <div class="pic"><img src="{{ asset('images/documents.jpg') }}" class="img-fluid"
+                                                          alt=""></div>
+                                    <div class="member-info">
+                                        <h4>{{$single->title}}</h4>
+                                        <span>{{ Str::limit($single->description, 100) }}</span>
+                                        <p><a href="{{ asset('storage/documents/' . $single->file) }}" class="btn btn-outline-primary btn-sm" download>
+                                                <i class="bi bi-download me-1"></i> Scarica Documento
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div><!-- End Team Member -->
+                        @endforeach
+                    </div>
+
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" data-aos="fade-up" data-aos-delay="200">
                     @foreach($documents as $single)
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app card m-2 p-2">
-                            <div>
-                                <h5 class="card-header">{{$single->title}}</h5>
+                        <div class="col " >
+                            <div class="card h-100 shadow-sm">
                                 <div class="card-body">
-                                    <p>{{$single->description}}</p>
-                                    <a href="{{ asset('storage/documents/' . $single->file) }}" download>
-                                        Scarica il file
-                                    </a>
+                                    <h5 class="card-title"><i class="bi bi-file-earmark-text me-2"></i> {{$single->title}}</h5>
+                                    <p class="card-text">{{ Str::limit($single->description, 100) }}</p>
+                                    <div class="text-center">
+                                        <a href="{{ asset('storage/documents/' . $single->file) }}" class="btn btn-outline-primary btn-sm" download>
+                                            <i class="bi bi-download me-1"></i> Scarica Documento
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-
-            </div>
-        </section><!-- End documenti Section -->
-
-        <!-- ======= proprietà Section ======= -->
-        <section id="properties" class="portfolio mt-5">
-            <div class="container" data-aos="fade-up">
-                <div class="section-header">
-                    <h3 class="section-title">Proprietà</h3>
-                    <p class="section-description">In questa trovate le proprietà del Patriziato</p>
-                </div>
-
-                <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-                    @foreach($properties as $single)
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app card m-2 p-2">
-                            <div>
-                                <h5 class="card-header">{{$single->title}}</h5>
-                                <div class="card-body">
-                                    <p>{{$single->description}}</p>
-                                    <img
-                                        src="{{ asset('storage/properties/' . $single->file) }}"
-                                        alt="Document image"
-                                        class="img-fluid"
-                                        style="max-width: 100%; height: auto;"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
             </div>
         </section>
-        <!-- End property Section -->
+        </section><!-- End documenti Section -->
+
+
+        <section id="properties" class="portfolio mt-5">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header text-center mb-5">
+                    <h3 class="section-title">Proprietà del Patriziato</h3>
+                    <p class="section-description">Esplora le nostre proprietà con documenti dettagliati.</p>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" data-aos="fade-up" data-aos-delay="200">
+                    @foreach($properties as $single)
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-house-door me-2"></i> {{$single->title}}</h5>
+                                    <p class="card-text">{{ Str::limit($single->description, 100) }}</p>
+                                    <div class="text-center">
+                                        <img src="{{ asset('storage/properties/' . $single->file) }}"
+                                             alt="Document image" class="img-fluid rounded mb-3 property-image"
+                                             style="max-height: 200px; object-fit: cover; cursor: pointer;"
+                                             data-modal-id="propertyModal{{ $single->id }}"
+                                             data-image="{{ asset('storage/properties/' . $single->file) }}">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        @foreach($properties as $single)
+            <div class="modal fade" id="propertyModal{{ $single->id }}" tabindex="-1"
+                 aria-labelledby="propertyModalLabel{{ $single->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="propertyModalLabel{{ $single->id }}">{{ $single->title }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Chiudi"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img src="" alt="Property Image" class="img-fluid" id="modalImage{{ $single->id }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach<!-- End properties Section -->
 
 
         <!-- ======= Contact Section ======= -->
@@ -305,34 +361,35 @@
                     <p class="section-description">Inserisci i tuoi dati di accesso</p>
                 </div>
 
-                <form method="post" action="{{ route('login.perform') }}">
+                <div class="card-body">
+                    <form method="post" action="{{ route('login.perform') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        @include('layouts.partials.messages')
 
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" required="required" autofocus>
+                            <label for="floatingUsername">Username</label>
+                            @if ($errors->has('username'))
+                                <span class="text-danger text-left">{{ $errors->first('username') }}</span>
+                            @endif
+                        </div>
 
-                    @include('layouts.partials.messages')
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                            <label for="floatingPassword">Password</label>
+                            @if ($errors->has('password'))
+                                <span class="text-danger text-left">{{ $errors->first('password') }}</span>
+                            @endif
+                        </div>
 
-                    <div class="form-group form-floating mb-3">
-                        <input type="text" class="form-control" name="username" value="{{ old('username') }}"
-                               placeholder="Username" required="required" autofocus>
-                        <label for="floatingName">username</label>
-                        @if ($errors->has('username'))
-                            <span class="text-danger text-left">{{ $errors->first('username') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group form-floating mb-3">
-                        <input type="password" class="form-control" name="password" value="{{ old('password') }}"
-                               placeholder="Password" required="required">
-                        <label for="floatingPassword">Password</label>
-                        @if ($errors->has('password'))
-                            <span class="text-danger text-left">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
-
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center py-3">
                     @include('auth.partials.copy')
-                </form>
+                </div>
 
             </div>
         </section><!-- End login Section -->
@@ -377,6 +434,41 @@
 
     <!-- Template Main JS File -->
     <script src="assets//regna/js/main.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('scroll')) {
+                const section = document.getElementById(urlParams.get('scroll'));
+                if (section) {
+                    section.scrollIntoView({behavior: 'smooth'});
+                }
+            }
+
+
+            const propertyImages = document.querySelectorAll('.property-image');
+
+            propertyImages.forEach(image => {
+                image.addEventListener('click', function () {
+                    const modalId = this.dataset.modalId;
+                    const modalImage = document.getElementById('modalImage' + modalId.replace('propertyModal', ''));
+                    modalImage.src = this.dataset.image;
+
+                    const modal = new bootstrap.Modal(document.getElementById(modalId));
+                    modal.show();
+
+                    //riattiva la chiusura del bottone
+                    const closeButton = document.querySelector('#' + modalId + ' [data-bs-dismiss="modal"]');
+                    if (closeButton) {
+                        closeButton.addEventListener('click', function () {
+                            modal.hide();
+                        })
+                    }
+                });
+            });
+        });
+    </script>
 
 
 
