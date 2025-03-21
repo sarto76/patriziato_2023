@@ -211,23 +211,7 @@
 
                 </div>
 
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" data-aos="fade-up" data-aos-delay="200">
-                    @foreach($documents as $single)
-                        <div class="col " >
-                            <div class="card h-100 shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="bi bi-file-earmark-text me-2"></i> {{$single->title}}</h5>
-                                    <p class="card-text">{{ Str::limit($single->description, 100) }}</p>
-                                    <div class="text-center">
-                                        <a href="{{ asset('storage/documents/' . $single->file) }}" class="btn btn-outline-primary btn-sm" download>
-                                            <i class="bi bi-download me-1"></i> Scarica Documento
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+
             </div>
         </section>
         </section><!-- End documenti Section -->

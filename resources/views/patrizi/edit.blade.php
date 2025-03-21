@@ -116,6 +116,31 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Padre:</strong>
+
+                   {{-- <select name="father_id" class="form-control">
+                        <option value="">--</option>
+                        @foreach($patrizi as $single)
+                            <option value="{{ $single->id }}" {{ $patrizio->id == $single->father->id ? 'selected' : '' }}>{{ $single->firstname }} {{ $single->lastname }}</option>
+                        @endforeach
+
+                    </select>--}}
+
+                    @foreach($patrizi as $single)
+                        {{$single->id}} {{$single->firstname}} {{$single->lastname}} {{$single->father->id}} {{$patrizio->id}} <br>
+                    @endforeach
+
+
+                    <input type="checkbox" name="patriziato_lost" value="1" {{ $patrizio->patriziato_lost == 1 ? 'checked' : '' }}>
+                    @error('patriziato_lost')
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    @enderror
+
+        </div>
+
         <!-- Phone -->
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -211,7 +236,8 @@
         <!-- Submit Button -->
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-success" href="{{ route('patrizi.index') }}"> Indietro</a>
+                <button type="submit" class="btn btn-primary">Modifica</button>
             </div>
         </div>
     </form>
