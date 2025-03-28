@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Patrizio extends Model
 {
@@ -15,23 +16,37 @@ class Patrizio extends Model
 
 
 
-    public function father()
+
+
+// Metodo per ottenere il padre con SQL diretto
+    public function getFatherAttribute()
     {
-        return $this->belongsTo(Patrizio::class, 'patrizio1_id', 'id')
-            ->where('relations.type', 'father')
-            ->withDefault();
+        $result = DB::selectOne("SELECT patrizi.* FROM patrizi
+                           JOIN relations ON patrizi.id = relations.patrizio1_id
+                           WHERE relations.type = 'father'
+                           AND relations.patrizio2_id = ?", [$this->id]);
+
+        return $result ? Patrizio::hydrate([(array)$result])->first() : new Patrizio();
     }
 
-    public function mother()
+    public function getMotherAttribute()
     {
-        return $this->belongsTo(Patrizio::class, 'patrizio1_id')->where('type', 'mother')
-            ->withDefault();
+        $result = DB::selectOne("SELECT patrizi.* FROM patrizi
+                           JOIN relations ON patrizi.id = relations.patrizio1_id
+                           WHERE relations.type = 'mother'
+                           AND relations.patrizio2_id = ?", [$this->id]);
+
+        return $result ? Patrizio::hydrate([(array)$result])->first() : new Patrizio();
     }
 
-    public function spouse()
+    public function getSpouseAttribute()
     {
-        return $this->belongsTo(Patrizio::class, 'patrizio1_id')->where('relations.type', 'spouse')
-            ->withDefault();
+        $result = DB::selectOne("SELECT patrizi.* FROM patrizi
+                           JOIN relations ON patrizi.id = relations.patrizio1_id
+                           WHERE relations.type = 'spouse'
+                           AND relations.patrizio2_id = ?", [$this->id]);
+
+        return $result ? Patrizio::hydrate([(array)$result])->first() : new Patrizio();
     }
 
 }

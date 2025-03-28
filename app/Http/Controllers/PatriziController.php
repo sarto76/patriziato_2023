@@ -43,11 +43,12 @@ class PatriziController extends Controller
     }
     public function edit($patrizioId)
     {
-        $patrizio = Patrizio::find(477); // Ottieni un modello
-        dd($patrizio->father()->toSql());
+        //$patrizio = Patrizio::find(477); // Ottieni un modello
+        //dd($patrizio->father()->toSql());
         $patrizi = Patrizio::where('living',1)->orderBy('lastname','asc')->get();
 
         $patrizio = Patrizio::find($patrizioId);
+
         return view('patrizi.edit', compact('patrizio','patrizi'));
     }
 
