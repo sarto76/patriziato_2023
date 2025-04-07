@@ -55,6 +55,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::delete('/patrizi/{patrizi}', 'PatriziController@destroy')->name('patrizi.destroy');
     Route::put('patrizi/{id}','PatriziController@update')->name('patrizi.update');
     Route::get('/patrizi/data', 'PatriziController@getPatriziData')->name('patrizi.data');
+    Route::get('/patrizi/search', 'PatriziController@searchPatrizi')->name('patrizi.search');
 
 
     Route::get('/component', 'ComponentsController@index')->name('component.index');

@@ -14,10 +14,17 @@ import './bootstrap';
    * Apply .scrolled class to the body as the page is scrolled down
    */
   function toggleScrolled() {
-    const selectBody = document.querySelector('body');
-    const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+      const selectBody = document.querySelector('body');
+      const selectHeader = document.querySelector('#header');
+
+      // Se non c'è l'header, applica la classe scrolled basandosi solo sullo scroll
+      if (!selectHeader) {
+          window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+          return;
+      }
+
+      if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+      window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
   }
 
   document.addEventListener('scroll', toggleScrolled);
@@ -28,6 +35,7 @@ import './bootstrap';
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
 
+  if(!mobileNavToggleBtn) return;
   function mobileNavToogle() {
     document.querySelector('body').classList.toggle('mobile-nav-active');
     mobileNavToggleBtn.classList.toggle('bi-list');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Patrizio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class PatriziController extends Controller
@@ -14,7 +15,42 @@ class PatriziController extends Controller
 
     public function getPatriziData()
     {
-        return DataTables::of(Patrizio::where('living',1)->orderBy('lastname','asc'))->make(true);
+       //return DataTables::of(Patrizio::where('living',1)->orderBy('lastname','asc'))->make(true);
+
+        return DataTables::of(Patrizio::where('living', 1)->orderBy('lastname', 'asc'))
+            ->addColumn('mother', function ($patrizio) {
+                $mother = $patrizio->mother;
+                return $mother->firstname . ' ' . $mother->lastname;
+            })
+            ->addColumn('father', function ($patrizio) {
+                $father = $patrizio->father;
+                return $father->firstname . ' ' . $father->lastname;
+            })
+            ->filterColumn('mother', function($query, $keyword) {
+                $query->whereIn('id', function ($subquery) use ($keyword) {
+                    $subquery->select('relations.patrizio2_id')
+                        ->from('relations')
+                        ->join('patrizi as mothers', 'relations.patrizio1_id', '=', 'mothers.id')
+                        ->where('relations.type', 'mother')
+                        ->where(function($q) use ($keyword) {
+                            $q->where('mothers.firstname', 'like', "%$keyword%")
+                                ->orWhere('mothers.lastname', 'like', "%$keyword%");
+                        });
+                });
+            })
+            ->filterColumn('father', function($query, $keyword) {
+                $query->whereIn('id', function ($subquery) use ($keyword) {
+                    $subquery->select('relations.patrizio2_id')
+                        ->from('relations')
+                        ->join('patrizi as fathers', 'relations.patrizio1_id', '=', 'fathers.id')
+                        ->where('relations.type', 'father')
+                        ->where(function($q) use ($keyword) {
+                            $q->where('fathers.firstname', 'like', "%$keyword%")
+                                ->orWhere('fathers.lastname', 'like', "%$keyword%");
+                        });
+                });
+            })
+            ->make(true);
     }
 
     public function create()
@@ -52,6 +88,18 @@ class PatriziController extends Controller
         return view('patrizi.edit', compact('patrizio','patrizi'));
     }
 
+    public function searchPatrizi(Request $request)
+    {
+        $query = $request->input('q');
+
+        $patrizi = Patrizio::where('firstname', 'like', "%$query%")
+            ->orWhere('lastname', 'like', "%$query%")
+            ->limit(10)
+            ->get();
+
+        return response()->json($patrizi);
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -73,7 +121,33 @@ class PatriziController extends Controller
             $patrizio->picture = $filePath;
         }
 
-        $patrizio->update($request->except('picture'));
+        $patrizio->update($request->except('picture', 'father_id', 'mother_id'));
+
+        // PADRE
+        if ($request->filled('father_id')) {
+            DB::table('relations')->updateOrInsert(
+                ['patrizio2_id' => $patrizio->id, 'type' => 'father'],
+                ['patrizio1_id' => $request->input('father_id')]
+            );
+        } else {
+            DB::table('relations')
+                ->where('patrizio2_id', $patrizio->id)
+                ->where('type', 'father')
+                ->delete();
+        }
+
+// MADRE
+        if ($request->filled('mother_id')) {
+            DB::table('relations')->updateOrInsert(
+                ['patrizio2_id' => $patrizio->id, 'type' => 'mother'],
+                ['patrizio1_id' => $request->input('mother_id')]
+            );
+        } else {
+            DB::table('relations')
+                ->where('patrizio2_id', $patrizio->id)
+                ->where('type', 'mother')
+                ->delete();
+        }
 
         return redirect()->route('patrizi.edit', $patrizio->id)->with('success','Patrizio modificato.');
     }

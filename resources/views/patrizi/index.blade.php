@@ -32,6 +32,8 @@
                     <th>Cognome</th>
                     <th>Data di Nascita</th>
                     <th>Vivente</th>
+                    <th>Padre</th>
+                    <th>Madre</th>
                     <th>Data Morte</th>
                     <th>Data perdita patriziato</th>
                     <th>Telefono</th>
@@ -95,6 +97,8 @@
                                 return 'No';
                         }
                     },
+                    {data: 'father'},
+                    {data: 'mother'},
                     {
                         data: 'death',
                         render: function (data, type, row) {

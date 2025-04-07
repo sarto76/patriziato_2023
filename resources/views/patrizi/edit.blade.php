@@ -139,14 +139,20 @@
                         <div class="form-group">
                             <strong>Madre:</strong>
 
-                            <select name="father_id" class="form-control">
+                            <label for="mother_input">Madre</label>
+                            <input type="checkbox" id="mother_is_patrizia" name="mother_is_patrizia" checked>
+                            <label for="mother_is_patrizia">È patrizia?</label>
+                            <select id="mother_input" class="form-control mt-1" name="mother_name" style="width: 100%"></select>
+                            <input type="hidden" name="mother_id" id="mother_id">
+
+                           {{-- <select name="mother_id" class="form-control">
                                 <option value="">--</option>
                                 @foreach($patrizi as $single)
                                     <option value="{{ $single->id }}" {{ $patrizio->mother->id == $single->id ? 'selected' : '' }}>{{ $single->firstname }} {{ $single->lastname }}</option>
                                 @endforeach
 
                             </select>
-
+--}}
                             {{--   @foreach($patrizi as $single)
                                    {{$single->id}} {{$single->firstname}} {{$single->lastname}} {{$single->father->id}} {{$patrizio->id}}  <br>
                                @endforeach--}}
@@ -255,3 +261,49 @@
     </form>
 
 @endsection
+
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            setupSelect2WithToggle('mother_input', 'mother_is_patrizia', 'mother_id', '/patrizi/search');
+            setupSelect2WithToggle('father_input', 'father_is_patrizio', 'father_id', '/patrizi/search');
+        });
+
+        function setupSelect2WithToggle(inputId, checkboxId, hiddenId, searchUrl) {
+            function activateSelect2() {
+                $('#' + inputId).select2({
+                    placeholder: 'Scrivi un nome',
+                    allowClear: true,
+                    tags: true,
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: searchUrl,
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return { q: params.term };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.map(p => ({
+                                    id: p.id,
+                                    text: p.firstname + ' ' + p.lastname
+                                }))
+                            };
+                        },
+                        cache: true
+                    }
+                }).on('select2:select', function (e) {
+                    $('#' + hiddenId).val(e.params.data.id);
+                });
+            }
+
+
+            activateSelect2();
+
+
+        }
+    </script>
+@endsection
+
