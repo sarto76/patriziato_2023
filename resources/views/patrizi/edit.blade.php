@@ -271,23 +271,22 @@
             setupSelect2WithToggle('mother_input', 'mother_is_patrizia', 'mother_id', '/patrizi/search');
             setupSelect2WithToggle('father_input', 'father_is_patrizio', 'father_id', '/patrizi/search');
 
-            //console.log({{ $patrizio->mother->id }});
+            //console.log({{ $patrizio->mother->lastname }});
 
-            @if(isset($patrizio) && $patrizio->mother_id)
-            // Fetch iniziale per popolare Select2
+            @if(isset($patrizio) && $patrizio->mother->id)
 
-                var option = new Option({{ $patrizio->mother->firstname }} {{ $patrizio->mother->lastname }}, {{ $patrizio->mother_id }}, true, true);
+            $('#mother_id').val('{{ $patrizio->mother->id }}');
 
-                $('#mother_input').append(option).trigger('change');
-                $('#mother_id').val(data.id);
+            var motherName = '{{ $patrizio->mother->firstname }} {{ $patrizio->mother->lastname }}';
+            var newOption = new Option(motherName, '{{ $patrizio->mother_id }}', true, true);
+            $('#mother_input').append(newOption).trigger('change');
+
             @endif
 
             // Gestione cambio selezione
             $('#mother_input').on('change', function() {
                 $('#mother_id').val($(this).val());
             });
-
-
 
 
             $('#mother_input').on('change select2:select select2:unselect', function() {
