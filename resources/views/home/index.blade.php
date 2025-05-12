@@ -247,6 +247,30 @@
             </div>
         </section>
 
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($properties as $single)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <img class="d-block w-100" src="{{ asset('storage/properties/' . $single->file) }}" alt="{{ $single->title }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>...</h5>
+                            <p>...</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+
         @foreach($properties as $single)
             <div class="modal fade" id="propertyModal{{ $single->id }}" tabindex="-1"
                  aria-labelledby="propertyModalLabel{{ $single->id }}" aria-hidden="true">
@@ -421,6 +445,13 @@
 
 
     <script>
+        window.onload = function() {
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+                document.getElementById('hero').scrollIntoView({behavior: 'smooth'});
+            }, 100);
+        };
+
         document.addEventListener("DOMContentLoaded", function () {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('scroll')) {

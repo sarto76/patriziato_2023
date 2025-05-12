@@ -137,18 +137,20 @@ class PatriziController extends Controller
         }
 
 // MADRE
+
+        //se la madre è patrizia
         if ($request->filled('mother_id')) {
             DB::table('relations')->updateOrInsert(
                 ['patrizio2_id' => $patrizio->id, 'type' => 'mother'],
                 ['patrizio1_id' => $request->input('mother_id')]
             );
         } else {
+
             DB::table('relations')
                 ->where('patrizio2_id', $patrizio->id)
                 ->where('type', 'mother')
                 ->delete();
         }
-
         return redirect()->route('patrizi.edit', $patrizio->id)->with('success','Patrizio modificato.');
     }
     public function destroy(News $news)

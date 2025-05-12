@@ -145,6 +145,8 @@
                             <select id="mother_input" class="form-control mt-1" name="mother_name" style="width: 100%"></select>
                             <input type="hidden" name="mother_id" id="mother_id">
 
+
+
                            {{-- <select name="mother_id" class="form-control">
                                 <option value="">--</option>
                                 @foreach($patrizi as $single)
@@ -268,7 +270,38 @@
         $(document).ready(function () {
             setupSelect2WithToggle('mother_input', 'mother_is_patrizia', 'mother_id', '/patrizi/search');
             setupSelect2WithToggle('father_input', 'father_is_patrizio', 'father_id', '/patrizi/search');
+
+            //console.log({{ $patrizio->mother->id }});
+
+            @if(isset($patrizio) && $patrizio->mother_id)
+            // Fetch iniziale per popolare Select2
+
+                var option = new Option({{ $patrizio->mother->firstname }} {{ $patrizio->mother->lastname }}, {{ $patrizio->mother_id }}, true, true);
+
+                $('#mother_input').append(option).trigger('change');
+                $('#mother_id').val(data.id);
+            @endif
+
+            // Gestione cambio selezione
+            $('#mother_input').on('change', function() {
+                $('#mother_id').val($(this).val());
+            });
+
+
+
+
+            $('#mother_input').on('change select2:select select2:unselect', function() {
+                const selectedValue = $(this).val();
+                const selectedOption = $(this).find('option[value="' + selectedValue + '"]');
+
+                const isManualInput = selectedOption.length > 0 && selectedOption.data('select2-tag') === true;
+
+                $('#mother_is_patrizia').prop('checked', !isManualInput && selectedValue !== '');
+            });
+
         });
+
+
 
         function setupSelect2WithToggle(inputId, checkboxId, hiddenId, searchUrl) {
             function activateSelect2() {

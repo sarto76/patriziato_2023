@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Patrizio;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 
@@ -56,6 +57,14 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::put('patrizi/{id}','PatriziController@update')->name('patrizi.update');
     Route::get('/patrizi/data', 'PatriziController@getPatriziData')->name('patrizi.data');
     Route::get('/patrizi/search', 'PatriziController@searchPatrizi')->name('patrizi.search');
+
+    Route::get('/patrizi/get/{id}', function($id) {
+        $patrizio = Patrizio::findOrFail($id);
+        return response()->json([
+            'id' => $patrizio->id,
+            'text' => $patrizio->firstname . ' ' . $patrizio->lastname
+        ]);
+    });
 
 
     Route::get('/component', 'ComponentsController@index')->name('component.index');
