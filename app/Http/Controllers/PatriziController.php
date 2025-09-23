@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\ExternPerson;
 use App\Models\Patrizio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,6 +86,7 @@ class PatriziController extends Controller
 
         $patrizio = Patrizio::find($patrizioId);
 
+
         return view('patrizi.edit', compact('patrizio','patrizi'));
     }
 
@@ -115,13 +117,14 @@ class PatriziController extends Controller
 
         $patrizio = Patrizio::find($id);
 
+
         if ($request->hasFile('picture')) {
             $imageName = time().'.'.$request->picture->extension();
             $filePath = $request->picture->storeAs('images', $imageName, 'public');
             $patrizio->picture = $filePath;
         }
-
         $patrizio->update($request->except('picture', 'father_id', 'mother_id'));
+
 
         // PADRE
         if ($request->filled('father_id')) {
@@ -137,19 +140,64 @@ class PatriziController extends Controller
         }
 
 // MADRE
+        //se la madre è patrizia il checkbox è già checcato, quindi lo associo
+        if ($request->has('mother_is_patrizia')) {
+            if ($request->filled('mother_id')) {
+                DB::table('relations')->updateOrInsert(
+                    ['patrizio2_id' => $patrizio->id, 'type' => 'mother'],
+                    ['patrizio1_id' => $request->input('mother_id')]
+                );
+            }
+        }
+        //se la madre non è patrizia, il checkbox non è checcato,
+        // quindi elimino l'eventuale associazione e inserisco nome e cogmome della madre non patrizia all'interno
+        // della tabella extern_person
 
-        //se la madre è patrizia
-        if ($request->filled('mother_id')) {
-            DB::table('relations')->updateOrInsert(
-                ['patrizio2_id' => $patrizio->id, 'type' => 'mother'],
-                ['patrizio1_id' => $request->input('mother_id')]
-            );
-        } else {
+        else {
+
+            // 🔹 elimino eventuale persona esterna già associata
+            $oldExtern = DB::table('extern_persons')
+                ->leftJoin('relations', 'extern_persons.id', '=', 'relations.extern_person_id')
+                ->where('relations.patrizio2_id', $patrizio->id)
+                ->where('relations.type', 'mother')
+                ->select('extern_persons.id')
+                ->first();
 
             DB::table('relations')
                 ->where('patrizio2_id', $patrizio->id)
                 ->where('type', 'mother')
                 ->delete();
+
+
+
+            if ($oldExtern) {
+                DB::table('extern_persons')->where('id', $oldExtern->id)->delete();
+            }
+
+            // 🔹 Creo/aggiorno la persona esterna (nome completo in una colonna)
+            $externId = DB::table('extern_persons')->updateOrInsert(
+                ['fullname' => $request->input('mother_name')],
+                ['updated_at' => now(), 'created_at' => now()]
+            );
+
+            // recupero id appena creato/aggiornato
+            $extern = DB::table('extern_persons')
+                ->where('fullname', $request->input('mother_name'))
+                ->first();
+
+            // 🔹 Inserisco la relazione con la persona esterna
+            DB::table('relations')->insert([
+                'patrizio1_id'     => null,
+                'extern_person_id' => $extern->id,
+                'patrizio2_id'     => $patrizio->id,
+                'type'             => 'mother',
+                'created_at'       => now(),
+                'updated_at'       => now(),
+            ]);
+
+
+
+
         }
         return redirect()->route('patrizi.edit', $patrizio->id)->with('success','Patrizio modificato.');
     }

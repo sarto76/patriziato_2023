@@ -273,13 +273,23 @@
 
             //console.log({{ $patrizio->mother->lastname }});
 
-            @if(isset($patrizio) && $patrizio->mother->id)
+            @if(isset($patrizio) && $patrizio->mother && $patrizio->mother->id)
 
-            $('#mother_id').val('{{ $patrizio->mother->id }}');
-
+            var motherId = '{{ $patrizio->mother->id }}';
             var motherName = '{{ $patrizio->mother->firstname }} {{ $patrizio->mother->lastname }}';
-            var newOption = new Option(motherName, '{{ $patrizio->mother_id }}', true, true);
+
+
+            $('#mother_id').val(motherId);
+
+
+            var newOption = new Option(motherName, motherId, true, true);
             $('#mother_input').append(newOption).trigger('change');
+
+
+            $('#mother_input').trigger({
+                type: 'select2:select',
+                params: { data: { id: motherId, text: motherName } }
+            });
 
             @endif
 
