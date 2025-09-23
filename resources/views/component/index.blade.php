@@ -22,10 +22,15 @@
             @foreach ($components as $single)
                 <div class="col-sm-6 mb-1">
                     <div class="card">
+                        <img class="card-img-top img-fluid"
+                             src="{{ asset('storage/' . $single->picture) }}"
+                             style="max-height: 300px; object-fit: cover;">
                         <h5 class="card-header">{{$single->role}}</h5>
                         <div class="card-body">
                             <p class="card-text">{{$single->firstname}}</p>
                             <p class="card-text">{{$single->lastname}}</p>
+                            <p>
+
                         </div>
                         @auth
                             <div class="m-1">

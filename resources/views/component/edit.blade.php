@@ -53,6 +53,27 @@
                     @enderror
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Immagine attuale:</strong><br>
+
+                    @if($component->picture)
+                        <img src="{{ asset('storage/' . $component->picture) }}"
+                             alt="Immagine attuale"
+                             style="max-height: 200px; width:auto; object-fit: cover; border-radius: 8px; margin-bottom:10px;">
+                    @else
+                        <p>Nessuna immagine caricata</p>
+                    @endif
+
+                    <br>
+                    <strong>Cambia immagine:</strong>
+                    <input type="file" name="picture" class="form-control" placeholder="Immagine">
+
+                    @error('picture')
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
             <div class="pull-right mb-2 mt-2">
                 <a class="btn btn-success" href="{{ route('component.index') }}"> Indietro</a>
                 <button type="submit" class="btn btn-primary ml-3 mt-1">Modifica</button>

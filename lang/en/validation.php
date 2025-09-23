@@ -43,7 +43,7 @@ return [
     'different' => ':attribute e :other devono essere diversi.',
     'digits' => ':attribute deve essere lungo :digits caratteri.',
     'digits_between' => ':attribute deve essere compreso tra :min e :max cifre.',
-    'dimensions' => 'Le dimensioni immagine di :attribute non sono valide.',
+    'dimensions' => 'Le dimensioni immagine di :attribute non sono valide. Deve essere un quadrato',
     'distinct' => ':attribute contiene dei valori duplicati.',
     'doesnt_end_with' => ':attribute non deve finire con uno dei seguenti valori: :values.',
     'doesnt_start_with' => ':attribute non deve cominciare con uno dei seguenti valori: :values.',

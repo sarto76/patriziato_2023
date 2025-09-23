@@ -75,7 +75,7 @@
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>Componenti dell'Ufficio patriziale</h2>
+                <h2>Membri dell'Ufficio patriziale</h2>
                 <p></p>
             </div><!-- End Section Title -->
 
@@ -85,7 +85,7 @@
                     @foreach($member as $single)
                         <div class="col-lg-6 mt-1" data-aos="fade-up" data-aos-delay="100">
                             <div class="team-member d-flex align-items-start">
-                                <div class="pic"><img src="{{ asset('images/' . $single->picture) }}" class="img-fluid"
+                                <div class="pic"><img src="{{ asset('storage/' . $single->picture) }}" class="img-fluid"
                                                       alt=""></div>
                                 <div class="member-info">
                                     <h4>{{$single->firstname}} {{$single->lastname}}</h4>

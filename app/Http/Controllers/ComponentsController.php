@@ -23,10 +23,19 @@ class ComponentsController extends Controller
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
             'role' => 'required|max:255',
+            'picture' => 'nullable|image|max:2048|dimensions:min_width=300,min_height=300,ratio=1/1',
         ]);
 
         $component = Component::find($id);
-        $component->update($request->all());
+
+        $component->fill($request->except('picture'));
+
+        if ($request->hasFile('picture')) {
+            $imagePath = $request->file('picture')->store('components', 'public');
+            $component->picture = $imagePath;
+        }
+
+        $component->save();
 
         return redirect()->route('component.edit', $component->id)->with('success','Membro ufficio modificato.');
     }
