@@ -72,6 +72,28 @@
 
         <!-- ======= About Section ======= -->
         <section id="about" class="team section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Informazioni</h2>
+                <p></p>
+            </div><!-- End Section Title -->
+            <div class="container">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-6 position-relative d-flex align-items-center order-lg-last" data-aos="fade-up"
+                         data-aos-delay="200">
+                        <img src="{{ asset('images/info.jpg') }}" class="img-fluid flex-shrink-0" alt="">
+                    </div>
+
+                    <div class="col-lg-12 content" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Chi siamo</h3>
+                        <p>
+                            {{ $info->text }}
+                        </p>
+                    </div>
+
+                </div>
+                <br>
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
