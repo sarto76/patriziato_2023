@@ -16,41 +16,94 @@ class PatriziController extends Controller
 
     public function getPatriziData()
     {
-       //return DataTables::of(Patrizio::where('living',1)->orderBy('lastname','asc'))->make(true);
+        return DataTables::of(
+            Patrizio::where('living', 1)->orderBy('lastname', 'asc')
+        )
 
-        return DataTables::of(Patrizio::where('living', 1)->orderBy('lastname', 'asc'))
             ->addColumn('mother', function ($patrizio) {
-                $mother = $patrizio->mother;
-                return $mother->firstname . ' ' . $mother->lastname;
+
+                if (!$patrizio->relationMother) {
+                    return '';
+                }
+
+                if ($patrizio->relationMother->patrizio1_id) {
+                    $mother = $patrizio->relationMother->motherPatrizio;
+                } else {
+                    $mother = $patrizio->relationMother->motherExtern;
+                }
+
+                return $mother
+                    ? $mother->firstname . ' ' . $mother->lastname
+                    : '';
             })
+
             ->addColumn('father', function ($patrizio) {
-                $father = $patrizio->father;
-                return $father->firstname . ' ' . $father->lastname;
+
+                if (!$patrizio->relationFather) {
+                    return '';
+                }
+
+                if ($patrizio->relationFather->patrizio1_id) {
+                    $father = $patrizio->relationFather->fatherPatrizio;
+                } else {
+                    $father = $patrizio->relationFather->fatherExtern;
+                }
+
+                return $father
+                    ? $father->firstname . ' ' . $father->lastname
+                    : '';
             })
-            ->filterColumn('mother', function($query, $keyword) {
+
+            /* ===========================
+               FILTRO MADRE (INTERNA + ESTERNA)
+            =========================== */
+
+            ->filterColumn('mother', function ($query, $keyword) {
+
                 $query->whereIn('id', function ($subquery) use ($keyword) {
+
                     $subquery->select('relations.patrizio2_id')
                         ->from('relations')
-                        ->join('patrizi as mothers', 'relations.patrizio1_id', '=', 'mothers.id')
+
+                        ->leftJoin('patrizi as mothers', 'relations.patrizio1_id', '=', 'mothers.id')
+                        ->leftJoin('extern_people as extern_mothers', 'relations.extern_person_id', '=', 'extern_mothers.id')
+
                         ->where('relations.type', 'mother')
-                        ->where(function($q) use ($keyword) {
+                        ->where(function ($q) use ($keyword) {
+
                             $q->where('mothers.firstname', 'like', "%$keyword%")
-                                ->orWhere('mothers.lastname', 'like', "%$keyword%");
+                                ->orWhere('mothers.lastname', 'like', "%$keyword%")
+                                ->orWhere('extern_mothers.firstname', 'like', "%$keyword%")
+                                ->orWhere('extern_mothers.lastname', 'like', "%$keyword%");
                         });
                 });
             })
-            ->filterColumn('father', function($query, $keyword) {
+
+            /* ===========================
+               FILTRO PADRE (INTERNO + ESTERNO)
+            =========================== */
+
+            ->filterColumn('father', function ($query, $keyword) {
+
                 $query->whereIn('id', function ($subquery) use ($keyword) {
+
                     $subquery->select('relations.patrizio2_id')
                         ->from('relations')
-                        ->join('patrizi as fathers', 'relations.patrizio1_id', '=', 'fathers.id')
+
+                        ->leftJoin('patrizi as fathers', 'relations.patrizio1_id', '=', 'fathers.id')
+                        ->leftJoin('extern_people as extern_fathers', 'relations.extern_person_id', '=', 'extern_fathers.id')
+
                         ->where('relations.type', 'father')
-                        ->where(function($q) use ($keyword) {
+                        ->where(function ($q) use ($keyword) {
+
                             $q->where('fathers.firstname', 'like', "%$keyword%")
-                                ->orWhere('fathers.lastname', 'like', "%$keyword%");
+                                ->orWhere('fathers.lastname', 'like', "%$keyword%")
+                                ->orWhere('extern_fathers.firstname', 'like', "%$keyword%")
+                                ->orWhere('extern_fathers.lastname', 'like', "%$keyword%");
                         });
                 });
             })
+
             ->make(true);
     }
 
@@ -145,7 +198,7 @@ class PatriziController extends Controller
             if ($request->filled('mother_id')) {
                 DB::table('relations')->updateOrInsert(
                     ['patrizio2_id' => $patrizio->id, 'type' => 'mother'],
-                    ['patrizio1_id' => $request->input('mother_id')]
+                    ['patrizio1_id' => $request->input('mother_id'), 'extern_person_id' => NULL]
                 );
             }
         }

@@ -21,22 +21,48 @@ class Patrizio extends Model
 // Metodo per ottenere il padre con SQL diretto
     public function getFatherAttribute()
     {
-        $result = DB::selectOne("SELECT patrizi.* FROM patrizi
-                           JOIN relations ON patrizi.id = relations.patrizio1_id
-                           WHERE relations.type = 'father'
-                           AND relations.patrizio2_id = ?", [$this->id]);
+        $relation = DB::table('relations')
+            ->where('type', 'father')
+            ->where('patrizio2_id', $this->id)
+            ->first();
 
-        return $result ? Patrizio::hydrate([(array)$result])->first() : new Patrizio();
+        if (!$relation) {
+            return null;
+        }
+
+        if ($relation->patrizio1_id) {
+            return Patrizio::find($relation->patrizio1_id);
+        }
+
+        if ($relation->extern_person_id) {
+            return ExternPerson::find($relation->extern_person_id);
+        }
+
+        return null;
     }
 
     public function getMotherAttribute()
     {
-        $result = DB::selectOne("SELECT patrizi.* FROM patrizi
-                           JOIN relations ON patrizi.id = relations.patrizio1_id
-                           WHERE relations.type = 'mother'
-                           AND relations.patrizio2_id = ?", [$this->id]);
+        $relation = DB::table('relations')
+            ->where('type', 'mother')
+            ->where('patrizio2_id', $this->id)
+            ->first();
 
-        return $result ? Patrizio::hydrate([(array)$result])->first() : new Patrizio();
+        if (!$relation) {
+            return null;
+        }
+
+        // Madre interna
+        if ($relation->patrizio1_id) {
+            return Patrizio::find($relation->patrizio1_id);
+        }
+
+        // Madre esterna
+        if ($relation->extern_person_id) {
+            return ExternPerson::find($relation->extern_person_id);
+        }
+
+        return null;
     }
 
     public function getSpouseAttribute()

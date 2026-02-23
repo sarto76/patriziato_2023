@@ -268,82 +268,110 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+
             setupSelect2WithToggle('mother_input', 'mother_is_patrizia', 'mother_id', '/patrizi/search');
             setupSelect2WithToggle('father_input', 'father_is_patrizio', 'father_id', '/patrizi/search');
 
-            //console.log({{ $patrizio->mother->lastname }});
 
-            @if(isset($patrizio) && $patrizio->mother && $patrizio->mother->id)
+            /* ============================
+               PRELOAD MADRE IN EDIT MODE
+            ============================ */
+
+            @if(isset($patrizio) && $patrizio->mother)
 
             var motherId = '{{ $patrizio->mother->id }}';
             var motherName = '{{ $patrizio->mother->firstname }} {{ $patrizio->mother->lastname }}';
-
+            var motherIsExtern = {{ $patrizio->relationMother && $patrizio->relationMother->extern_person_id ? 'true' : 'false' }};
 
             $('#mother_id').val(motherId);
 
-
             var newOption = new Option(motherName, motherId, true, true);
+
+            // 👇 Salviamo se è esterna o no
+            $(newOption).attr('data-is-extern', motherIsExtern);
+
             $('#mother_input').append(newOption).trigger('change');
 
-
-            $('#mother_input').trigger({
-                type: 'select2:select',
-                params: { data: { id: motherId, text: motherName } }
-            });
+            // Stato checkbox iniziale corretto
+            $('#mother_is_patrizia').prop('checked', !motherIsExtern);
 
             @endif
 
-            // Gestione cambio selezione
-            $('#mother_input').on('change', function() {
-                $('#mother_id').val($(this).val());
-            });
 
+            /* ============================
+               CHANGE HANDLER MADRE
+            ============================ */
 
             $('#mother_input').on('change select2:select select2:unselect', function() {
+
                 const selectedValue = $(this).val();
-                const selectedOption = $(this).find('option[value="' + selectedValue + '"]');
+                const selectedOption = $(this).find(':selected');
 
-                const isManualInput = selectedOption.length > 0 && selectedOption.data('select2-tag') === true;
+                // Aggiorna hidden
+                $('#mother_id').val(selectedValue);
 
-                $('#mother_is_patrizia').prop('checked', !isManualInput && selectedValue !== '');
+                if (!selectedValue) {
+                    $('#mother_is_patrizia').prop('checked', false);
+                    return;
+                }
+
+                const isManualInput = selectedOption.data('select2-tag') === true;
+                const isExtern = selectedOption.data('is-extern') === true;
+
+                if (isManualInput || isExtern) {
+                    $('#mother_is_patrizia').prop('checked', false);
+                } else {
+                    $('#mother_is_patrizia').prop('checked', true);
+                }
+
             });
 
         });
 
 
 
+        /* ============================
+           FUNZIONE GENERICA SELECT2
+        ============================ */
+
         function setupSelect2WithToggle(inputId, checkboxId, hiddenId, searchUrl) {
-            function activateSelect2() {
-                $('#' + inputId).select2({
-                    placeholder: 'Scrivi un nome',
-                    allowClear: true,
-                    tags: true,
-                    minimumInputLength: 1,
-                    ajax: {
-                        url: searchUrl,
-                        dataType: 'json',
-                        delay: 250,
-                        data: function (params) {
-                            return { q: params.term };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: data.map(p => ({
-                                    id: p.id,
-                                    text: p.firstname + ' ' + p.lastname
-                                }))
-                            };
-                        },
-                        cache: true
-                    }
-                }).on('select2:select', function (e) {
+
+            $('#' + inputId).select2({
+                placeholder: 'Scrivi un nome',
+                allowClear: true,
+                tags: true,
+                minimumInputLength: 1,
+                ajax: {
+                    url: searchUrl,
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return { q: params.term };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data.map(p => ({
+                                id: p.id,
+                                text: p.firstname + ' ' + p.lastname,
+                                is_extern: false // risultati ajax sono patrizi
+                            }))
+                        };
+                    },
+                    cache: true
+                }
+            })
+                .on('select2:select', function (e) {
+
                     $('#' + hiddenId).val(e.params.data.id);
+
+                    // Se arriva da ajax è patrizio → checkbox checked
+                    $('#' + checkboxId).prop('checked', true);
+                })
+                .on('select2:clear', function () {
+
+                    $('#' + hiddenId).val('');
+                    $('#' + checkboxId).prop('checked', false);
                 });
-            }
-
-
-            activateSelect2();
-
 
         }
     </script>
