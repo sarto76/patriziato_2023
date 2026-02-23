@@ -283,6 +283,7 @@
             var motherName = '{{ $patrizio->mother->firstname }} {{ $patrizio->mother->lastname }}';
             var motherIsExtern = {{ $patrizio->relationMother && $patrizio->relationMother->extern_person_id ? 'true' : 'false' }};
 
+
             $('#mother_id').val(motherId);
 
             var newOption = new Option(motherName, motherId, true, true);

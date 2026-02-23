@@ -15,6 +15,17 @@ class Patrizio extends Model
         'patriziato_lost', 'phone', 'email', 'street', 'zip', 'city', 'picture', 'password', 'confirmed'];
 
 
+    public function relationMother()
+    {
+        return $this->hasOne(Relation::class, 'patrizio2_id')
+            ->where('type', 'mother');
+    }
+
+    public function relationFather()
+    {
+        return $this->hasOne(Relation::class, 'patrizio2_id')
+            ->where('type', 'father');
+    }
 
 
 

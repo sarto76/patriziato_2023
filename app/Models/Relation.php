@@ -26,5 +26,15 @@ class Relation extends Model
         return $this->belongsTo(Patrizio::class, 'patrizio2_id');
     }
 
+    public function motherPatrizio()
+    {
+        return $this->belongsTo(Patrizio::class, 'patrizio1_id');
+    }
+
+    public function motherExtern()
+    {
+        return $this->belongsTo(ExternPerson::class, 'extern_person_id');
+    }
+
 
 }
