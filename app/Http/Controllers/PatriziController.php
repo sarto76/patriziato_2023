@@ -66,15 +66,14 @@ class PatriziController extends Controller
                         ->from('relations')
 
                         ->leftJoin('patrizi as mothers', 'relations.patrizio1_id', '=', 'mothers.id')
-                        ->leftJoin('extern_people as extern_mothers', 'relations.extern_person_id', '=', 'extern_mothers.id')
+                        ->leftJoin('extern_persons as extern_mothers', 'relations.extern_person_id', '=', 'extern_mothers.id')
 
                         ->where('relations.type', 'mother')
                         ->where(function ($q) use ($keyword) {
 
                             $q->where('mothers.firstname', 'like', "%$keyword%")
                                 ->orWhere('mothers.lastname', 'like', "%$keyword%")
-                                ->orWhere('extern_mothers.firstname', 'like', "%$keyword%")
-                                ->orWhere('extern_mothers.lastname', 'like', "%$keyword%");
+                                ->orWhere('extern_mothers.fullname', 'like', "%$keyword%");
                         });
                 });
             })
@@ -91,15 +90,14 @@ class PatriziController extends Controller
                         ->from('relations')
 
                         ->leftJoin('patrizi as fathers', 'relations.patrizio1_id', '=', 'fathers.id')
-                        ->leftJoin('extern_people as extern_fathers', 'relations.extern_person_id', '=', 'extern_fathers.id')
+                        ->leftJoin('extern_persons as extern_fathers', 'relations.extern_person_id', '=', 'extern_fathers.id')
 
                         ->where('relations.type', 'father')
                         ->where(function ($q) use ($keyword) {
 
                             $q->where('fathers.firstname', 'like', "%$keyword%")
                                 ->orWhere('fathers.lastname', 'like', "%$keyword%")
-                                ->orWhere('extern_fathers.firstname', 'like', "%$keyword%")
-                                ->orWhere('extern_fathers.lastname', 'like', "%$keyword%");
+                                ->orWhere('extern_fathers.fullname', 'like', "%$keyword%");
                         });
                 });
             })

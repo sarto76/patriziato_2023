@@ -82,7 +82,6 @@
 
                     <div class="col-lg-6 position-relative d-flex align-items-center order-lg-last" data-aos="fade-up"
                          data-aos-delay="200">
-                        <img src="{{ asset('images/info.jpg') }}" class="img-fluid flex-shrink-0" alt="">
                     </div>
 
                     <div class="col-lg-12 content" data-aos="fade-up" data-aos-delay="100">
@@ -95,31 +94,32 @@
                 </div>
                 <br>
 
-            <!-- Section Title -->
-            <div class="container section-title" data-aos="fade-up">
-                <h2>Membri dell'Ufficio patriziale</h2>
-                <p></p>
-            </div><!-- End Section Title -->
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Membri dell'Ufficio patriziale</h2>
+                    <p></p>
+                </div><!-- End Section Title -->
 
-            <div class="container">
+                <div class="container">
 
-                <div class="row gy-4">
-                    @foreach($member as $single)
-                        <div class="col-lg-6 mt-1" data-aos="fade-up" data-aos-delay="100">
-                            <div class="team-member d-flex align-items-start">
-                                <div class="pic"><img src="{{ asset('storage/' . $single->picture) }}" class="img-fluid"
-                                                      alt=""></div>
-                                <div class="member-info">
-                                    <h4>{{$single->firstname}} {{$single->lastname}}</h4>
-                                    <span>{{$single->role}}</span>
-                                    <p></p>
+                    <div class="row gy-4">
+                        @foreach($member as $single)
+                            <div class="col-lg-6 mt-1" data-aos="fade-up" data-aos-delay="100">
+                                <div class="team-member d-flex align-items-start">
+                                    <div class="pic"><img src="{{ asset('storage/' . $single->picture) }}"
+                                                          class="img-fluid"
+                                                          alt=""></div>
+                                    <div class="member-info">
+                                        <h4>{{$single->firstname}} {{$single->lastname}}</h4>
+                                        <span>{{$single->role}}</span>
+                                        <p></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div><!-- End Team Member -->
-                    @endforeach
-                </div>
+                            </div><!-- End Team Member -->
+                        @endforeach
+                    </div>
 
-            </div>
+                </div>
 
         </section><!-- /Team Section -->
 
@@ -221,7 +221,8 @@
                                     <div class="member-info">
                                         <h4>{{$single->title}}</h4>
                                         <span>{{ Str::limit($single->description, 100) }}</span>
-                                        <p><a href="{{ asset('storage/documents/' . $single->file) }}" class="btn btn-outline-primary btn-sm" download>
+                                        <p><a href="{{ asset('storage/documents/' . $single->file) }}"
+                                              class="btn btn-outline-primary btn-sm" download>
                                                 <i class="bi bi-download me-1"></i> Scarica Documento
                                             </a>
                                         </p>
@@ -269,27 +270,24 @@
             </div>
         </section>
 
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                @foreach($properties as $single)
-                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img class="d-block w-100" src="{{ asset('storage/properties/' . $single->file) }}" alt="{{ $single->title }}">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>...</h5>
-                            <p>...</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+        {{-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+             <div class="carousel-inner">
+                 @foreach($properties as $single)
+                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                         <img class="d-block w-100" src="{{ asset('storage/properties/' . $single->file) }}" alt="{{ $single->title }}">
+                         <div class="carousel-caption d-none d-md-block">
+                             <h5>...</h5>
+                             <p>...</p>
+                         </div>
+                     </div>
+                 @endforeach
+             </div>
+             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                 <span class="sr-only">Previous</span>
+             </a>
+
+         </div>--}}
 
 
 
@@ -330,7 +328,7 @@
                         <div class="info">
                             <div>
                                 <i class="bi bi-geo-alt"></i>
-                                <p>Patriziato<br>6685 Bosco Gurin</p>
+                                <p>Patriziato<br>Em Doorf 10<br>6685 Bosco Gurin</p>
                             </div>
 
                             <div>
@@ -383,44 +381,50 @@
             </div>
         </section><!-- End Contact Section -->
 
+
         <!-- ======= login Section ======= -->
         <section id="login" class="login">
-            <div class="container" data-aos="fade-up">
-                <div class="section-header mt-5">
-                    <h3 class="section-title">Login</h3>
-                    <p class="section-description">Inserisci i tuoi dati di accesso</p>
-                </div>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-md-8">
+                        <div class="form">
 
-                <div class="card-body">
-                    <form method="post" action="{{ route('login.perform') }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                        @include('layouts.partials.messages')
+                            <div class="section-header mt-5">
+                                <h3 class="section-title">Login</h3>
+                                <p class="section-description">Inserisci i tuoi dati di accesso</p>
+                            </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" required="required" autofocus>
-                            <label for="floatingUsername">Username</label>
-                            @if ($errors->has('username'))
-                                <span class="text-danger text-left">{{ $errors->first('username') }}</span>
-                            @endif
+
+                            <div class="card-body">
+                                <form method="post" action="{{ route('login.perform') }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                    @include('layouts.partials.messages')
+
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" name="username"
+                                               value="{{ old('username') }}" placeholder="Username" required="required"
+                                               autofocus>
+                                        @if ($errors->has('username'))
+                                            <span class="text-danger text-left">{{ $errors->first('username') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" name="password"
+                                               placeholder="Password" required="required">
+                                        @if ($errors->has('password'))
+                                            <span class="text-danger text-left">{{ $errors->first('password') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit">Login</button>
+                                    </div>
+                                </form>
+
                         </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
-                            <label for="floatingPassword">Password</label>
-                            @if ($errors->has('password'))
-                                <span class="text-danger text-left">{{ $errors->first('password') }}</span>
-                            @endif
-                        </div>
-
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-lg" type="submit">Login</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="card-footer text-center py-3">
-                    @include('auth.partials.copy')
-                </div>
-
             </div>
         </section><!-- End login Section -->
 
@@ -467,7 +471,7 @@
 
 
     <script>
-        window.onload = function() {
+        window.onload = function () {
             window.scrollTo(0, 0);
             setTimeout(() => {
                 document.getElementById('hero').scrollIntoView({behavior: 'smooth'});
