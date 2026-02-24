@@ -16,15 +16,13 @@ class PatriziController extends Controller
 
     public function getPatriziData()
     {
-        return DataTables::of(
-            Patrizio::where('living', 1)->orderBy('lastname', 'asc')
-        )
+        return DataTables::of(Patrizio::query())
 
+            /* ===========================
+               COLONNE PADRE E MADRE
+            =========================== */
             ->addColumn('mother', function ($patrizio) {
-
-                if (!$patrizio->relationMother) {
-                    return '';
-                }
+                if (!$patrizio->relationMother) return '';
 
                 if ($patrizio->relationMother->patrizio1_id) {
                     $mother = $patrizio->relationMother->motherPatrizio;
@@ -32,16 +30,10 @@ class PatriziController extends Controller
                     $mother = $patrizio->relationMother->motherExtern;
                 }
 
-                return $mother
-                    ? $mother->firstname . ' ' . $mother->lastname
-                    : '';
+                return $mother ? $mother->firstname . ' ' . $mother->lastname : '';
             })
-
             ->addColumn('father', function ($patrizio) {
-
-                if (!$patrizio->relationFather) {
-                    return '';
-                }
+                if (!$patrizio->relationFather) return '';
 
                 if ($patrizio->relationFather->patrizio1_id) {
                     $father = $patrizio->relationFather->fatherPatrizio;
@@ -49,28 +41,20 @@ class PatriziController extends Controller
                     $father = $patrizio->relationFather->fatherExtern;
                 }
 
-                return $father
-                    ? $father->firstname . ' ' . $father->lastname
-                    : '';
+                return $father ? $father->firstname . ' ' . $father->lastname : '';
             })
 
             /* ===========================
-               FILTRO MADRE (INTERNA + ESTERNA)
+               FILTRO MADRE
             =========================== */
-
             ->filterColumn('mother', function ($query, $keyword) {
-
                 $query->whereIn('id', function ($subquery) use ($keyword) {
-
                     $subquery->select('relations.patrizio2_id')
                         ->from('relations')
-
                         ->leftJoin('patrizi as mothers', 'relations.patrizio1_id', '=', 'mothers.id')
                         ->leftJoin('extern_persons as extern_mothers', 'relations.extern_person_id', '=', 'extern_mothers.id')
-
                         ->where('relations.type', 'mother')
                         ->where(function ($q) use ($keyword) {
-
                             $q->where('mothers.firstname', 'like', "%$keyword%")
                                 ->orWhere('mothers.lastname', 'like', "%$keyword%")
                                 ->orWhere('extern_mothers.fullname', 'like', "%$keyword%");
@@ -79,22 +63,16 @@ class PatriziController extends Controller
             })
 
             /* ===========================
-               FILTRO PADRE (INTERNO + ESTERNO)
+               FILTRO PADRE
             =========================== */
-
             ->filterColumn('father', function ($query, $keyword) {
-
                 $query->whereIn('id', function ($subquery) use ($keyword) {
-
                     $subquery->select('relations.patrizio2_id')
                         ->from('relations')
-
                         ->leftJoin('patrizi as fathers', 'relations.patrizio1_id', '=', 'fathers.id')
                         ->leftJoin('extern_persons as extern_fathers', 'relations.extern_person_id', '=', 'extern_fathers.id')
-
                         ->where('relations.type', 'father')
                         ->where(function ($q) use ($keyword) {
-
                             $q->where('fathers.firstname', 'like', "%$keyword%")
                                 ->orWhere('fathers.lastname', 'like', "%$keyword%")
                                 ->orWhere('extern_fathers.fullname', 'like', "%$keyword%");
@@ -102,12 +80,49 @@ class PatriziController extends Controller
                 });
             })
 
+            /* ===========================
+               ORDINE LATO SERVER
+            =========================== */
+            ->order(function ($query) {
+                $request = request();
+
+                if ($request->has('order')) {
+                    $columnIdx = $request->input('order.0.column');
+                    $dir = $request->input('order.0.dir', 'asc');
+
+                    // Mappa colonna DataTables → campo DB
+                    $columns = [
+                        0 => 'register_number',
+                        1 => 'firstname',
+                        2 => 'lastname',
+                        3 => 'birth',
+                        4 => 'living',
+                        5 => null, // padre virtuale
+                        6 => null, // madre virtuale
+                        7 => 'death',
+                        8 => 'patriziato_lost',
+                        9 => 'phone',
+                        10 => 'email',
+                        11 => 'street',
+                        12 => 'zip',
+                        13 => 'city',
+                        14 => 'picture',
+                        15 => 'note',
+                        16 => 'created_at'
+                    ];
+
+                    if (isset($columns[$columnIdx]) && $columns[$columnIdx]) {
+                        $query->orderBy($columns[$columnIdx], $dir);
+                    }
+                }
+            })
+
             ->make(true);
     }
 
     public function create()
     {
-        return view('news.create');
+        return view('patrizi.create');
     }
 
 
@@ -134,6 +149,9 @@ class PatriziController extends Controller
         //$patrizio = Patrizio::find(477); // Ottieni un modello
         //dd($patrizio->father()->toSql());
         $patrizi = Patrizio::where('living',1)->orderBy('lastname','asc')->get();
+
+        //dd($patrizi->first()->father);
+
 
         $patrizio = Patrizio::find($patrizioId);
 
@@ -252,10 +270,10 @@ class PatriziController extends Controller
         }
         return redirect()->route('patrizi.edit', $patrizio->id)->with('success','Patrizio modificato.');
     }
-    public function destroy(News $news)
+    public function destroy(Patrizio $patrizio)
     {
-        $news = News::find($news->id);
-        $news->delete();
-        return redirect()->route('news.index')->with('success','News eliminata.');
+        $patrizio = Patrizio::find($patrizio->id);
+        $patrizio->delete();
+        return redirect()->route('patrizi.index')->with('success','Patrizio eliminato.');
     }
 }

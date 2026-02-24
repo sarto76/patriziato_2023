@@ -70,7 +70,12 @@
                 serverSide: true,
                 responsive: true,
                 ajax: "{{ route('patrizi.data') }}",
-                order: [],
+                order: [[ 2, 'asc' ]],
+                lengthMenu: [
+                    [10, 25, 50, 100,-1],
+                    [10, 25, 50, 100,"Tutti"]
+                ],
+                pageLength: 25,
                 language: {
                     "url": "{{ asset('assets/datatables/it-IT.json') }}"
                 },
@@ -144,10 +149,12 @@
                     {data: 'note'},
                     {data: 'created_at'},
                     {
-                        data: null, // Colonna per il bottone Modifica
+                        data: 'id',
+                        orderable: false,
+                        searchable: false,
                         render: function(data, type, row) {
                             // Crea il bottone con l'ID del record
-                            return '<button class="btn btn-warning edit-btn" data-id="'+ row.id +'">Modifica</button>';
+                            return '<button class="btn btn-warning edit-btn" data-id="'+ data +'">Modifica</button>';
                         }
                     }
                 ],

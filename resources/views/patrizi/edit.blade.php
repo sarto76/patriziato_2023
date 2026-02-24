@@ -124,7 +124,10 @@
                     <select name="father_id" class="form-control">
                         <option value="">--</option>
                         @foreach($patrizi as $single)
-                            <option value="{{ $single->id }}" {{ $patrizio->father->id == $single->id ? 'selected' : '' }}>{{ $single->firstname }} {{ $single->lastname }}</option>
+                            <option value="{{ $single->id }}"
+                                {{ $patrizio->father?->id == $single->id ? 'selected' : '' }}>
+                                {{ $single->firstname }} {{ $single->lastname }}
+                            </option>
                         @endforeach
 
                     </select>
