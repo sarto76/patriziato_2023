@@ -272,7 +272,6 @@ class PatriziController extends Controller
     }
     public function destroy(Patrizio $patrizio)
     {
-        $patrizio = Patrizio::find($patrizio->id);
         $patrizio->delete();
         return redirect()->route('patrizi.index')->with('success','Patrizio eliminato.');
     }

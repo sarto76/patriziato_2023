@@ -53,7 +53,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/patrizi/create', 'PatriziController@create')->name('patrizi.create');
     Route::post('/patrizi', 'PatriziController@store')->name('patrizi.store');
     Route::get('/patrizi/{patrizi}/edit', 'PatriziController@edit')->name('patrizi.edit');
-    Route::delete('/patrizi/{patrizi}', 'PatriziController@destroy')->name('patrizi.destroy');
+    Route::delete('/patrizi/{patrizio}', 'PatriziController@destroy')->name('patrizi.destroy');
     Route::put('patrizi/{id}','PatriziController@update')->name('patrizi.update');
     Route::get('/patrizi/data', 'PatriziController@getPatriziData')->name('patrizi.data');
     Route::get('/patrizi/search', 'PatriziController@searchPatrizi')->name('patrizi.search');

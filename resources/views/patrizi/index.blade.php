@@ -16,7 +16,7 @@
         </div>
     </div>
     @if ($message = Session::get('success'))
-        <div class="alert alert-success">
+        <div id="success-alert" class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
@@ -24,32 +24,31 @@
 
 
     <div class="m-2">
-            <table id="patriziTable" class="display table table-striped table-bordered mb-2">
-                <thead>
-                <tr>
-                    <th>Numero di Registro</th>
-                    <th>Nome</th>
-                    <th>Cognome</th>
-                    <th>Data di Nascita</th>
-                    <th>Vivente</th>
-                    <th>Padre</th>
-                    <th>Madre</th>
-                    <th>Data Morte</th>
-                    <th>Data perdita patriziato</th>
-                    <th>Telefono</th>
-                    <th>Email</th>
-                    <th>Indirizzo</th>
-                    <th>Cap</th>
-                    <th>Città</th>
-                    <th>Foto</th>
-                    <th>Note</th>
-                    <th>Data Caricamento</th>
-                    <th>Azioni</th>
+        <table id="patriziTable" class="display table table-striped table-bordered mb-2">
+            <thead>
+            <tr>
+                <th>Numero di Registro</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Data di Nascita</th>
+                <th>Vivente</th>
+                <th>Padre</th>
+                <th>Madre</th>
+                <th>Data Morte</th>
+                <th>Data perdita patriziato</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Indirizzo</th>
+                <th>Cap</th>
+                <th>Città</th>
+                <th>Foto</th>
+                <th>Note</th>
+                <th>Data Caricamento</th>
+                <th>Azioni</th>
 
-                </tr>
-                </thead>
-            </table>
-
+            </tr>
+            </thead>
+        </table>
 
 
     </div>
@@ -59,10 +58,6 @@
 @section('scripts')
 
     <script>
-        function confirmDelete() {
-            return confirm('Sei sicuro di voler eliminare questo patrizio?');
-        }
-
 
         $(document).ready(function () {
             $('#patriziTable').DataTable({
@@ -70,10 +65,10 @@
                 serverSide: true,
                 responsive: true,
                 ajax: "{{ route('patrizi.data') }}",
-                order: [[ 2, 'asc' ]],
+                order: [[2, 'asc']],
                 lengthMenu: [
-                    [10, 25, 50, 100,-1],
-                    [10, 25, 50, 100,"Tutti"]
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Tutti"]
                 ],
                 pageLength: 25,
                 language: {
@@ -152,19 +147,40 @@
                         data: 'id',
                         orderable: false,
                         searchable: false,
-                        render: function(data, type, row) {
-                            // Crea il bottone con l'ID del record
-                            return '<button class="btn btn-warning edit-btn" data-id="'+ data +'">Modifica</button>';
+                        render: function (data, type, row) {
+
+                            let csrf = $('meta[name="csrf-token"]').attr('content');
+
+                            return `
+                            <a href="/patrizi/${data}/edit"
+                               class="btn btn-warning btn-sm">
+                               Modifica
+                            </a>
+
+                            <form action="/patrizi/${data}"
+                                  method="POST"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Sei sicuro di voler eliminare questo Patrizio?')">
+
+                                <input type="hidden" name="_token" value="${csrf}">
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Elimina
+                                </button>
+                            </form>
+                        `;
                         }
                     }
                 ],
 
             });
-        });
 
-        $(document).on('click', '.edit-btn', function() {
-            var patrizio = $(this).data('id');
-            window.location.href = '/patrizi/' + patrizio + '/edit';
+
+            setTimeout(function() {
+                $('#success-alert').fadeOut('slow');
+            }, 3000); // sparisce dopo 3 secondi
+
         });
 
 
