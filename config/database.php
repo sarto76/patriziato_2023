@@ -43,6 +43,19 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
+        'bosco_gurin' => [
+            'driver' => 'mysql',
+            'host' => env('BOSCO_DB_HOST', '127.0.0.1'),
+            'port' => env('BOSCO_DB_PORT', '3306'),
+            'database' => env('BOSCO_DB_DATABASE', 'bosco_gurin'),
+            'username' => env('BOSCO_DB_USERNAME', 'admin'),
+            'password' => env('BOSCO_DB_PASSWORD', 'admin'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),

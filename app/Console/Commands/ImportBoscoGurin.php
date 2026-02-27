@@ -15,7 +15,7 @@ class ImportBoscoGurin extends Command
         $this->info('Inizio import da bosco_gurin...');
 
         // Connessione al DB bosco_gurin
-        $sourceDB = DB::connection('mysql'); // se vuoi usare un altro DB config, puoi definire una connessione separata
+        $sourceDB = DB::connection('bosco_gurin'); // se vuoi usare un altro DB config, puoi definire una connessione separata
 
         try {
             // 1️⃣ Resetta ID in bosco_gurin (opzionale, se vuoi solo leggere puoi saltare)

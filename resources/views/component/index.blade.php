@@ -6,6 +6,11 @@
             <div class="pull-left mt-3">
                 <h2>Membri ufficio patriziale</h2>
             </div>
+            @auth
+                <div class="pull-right mb-3">
+                    <a class="btn btn-success" href="{{ route('component.create') }}"> Nuovo Membro</a>
+                </div>
+            @endauth
         </div>
     </div>
     @if ($message = Session::get('success'))
@@ -37,6 +42,14 @@
                                 <a class="btn btn-primary" href="{{ route('component.edit',$single->id) }}">Edit</a>
                             </div>
                         @endauth
+
+                        <div class="m-1">
+                            <form action="{{ route('component.destroy',$single->id) }}" method="Post" onsubmit="return confirmDelete();">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
@@ -49,3 +62,9 @@
 
 @endsection
 
+
+<script>
+    function confirmDelete() {
+        return confirm('Sei sicuro di voler eliminare questa news?');
+    }
+</script>

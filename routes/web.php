@@ -68,7 +68,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
 
     Route::get('/component', 'ComponentsController@index')->name('component.index');
+    Route::get('/component/create', 'ComponentsController@create')->name('component.create');
+    Route::post('/component', 'ComponentsController@store')->name('component.store');
     Route::get('/component/{component}/edit', 'ComponentsController@edit')->name('component.edit');
+    Route::delete('/component/{id}', 'ComponentsController@destroy')->name('component.destroy');
     Route::put('component/{id}','ComponentsController@update')->name('component.update');
 
 
