@@ -1,5 +1,17 @@
 @extends('layouts.app-master')
 
+
+<script src="{{ asset('assets/regna/js/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets/regna/js/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/regna/js/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/regna/js/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/regna/js/isotope-layout/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/regna/js/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/regna/js/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('assets/regna/js/main.js') }}" defer></script>
+
+
+
 @section('content')
 
 
@@ -457,25 +469,18 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/regna/js/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/regna/js/aos/aos.js"></script>
-    <script src="assets/regna/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/regna/js/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/regna/js/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/regna/js/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/regna/js/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="assets//regna/js/main.js"></script>
-
 
     <script>
         window.onload = function () {
-            window.scrollTo(0, 0);
-            setTimeout(() => {
-                document.getElementById('hero').scrollIntoView({behavior: 'smooth'});
-            }, 100);
+
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (!urlParams.has('scroll')) {
+                window.scrollTo(0, 0);
+                setTimeout(() => {
+                    document.getElementById('hero').scrollIntoView({behavior: 'smooth'});
+                }, 100);
+            }
         };
 
         document.addEventListener("DOMContentLoaded", function () {
