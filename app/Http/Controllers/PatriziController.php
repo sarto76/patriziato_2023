@@ -5,17 +5,20 @@ use App\Models\ExternPerson;
 use App\Models\Patrizio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
 class PatriziController extends Controller
 {
     public function index(){
       /*  $patrizi = Patrizio::query()->orderBy("lastname",'asc')->paginate(30);*/
+
         return view('patrizi.index');
     }
 
     public function getPatriziData()
     {
+
         return DataTables::of(Patrizio::query())
 
             /* ===========================
@@ -130,20 +133,73 @@ class PatriziController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'text' => 'required',
-            'active' => 'required',
-        ], [
-            'title.required' => 'Il titolo è obbligatorio.',
-            'text.required' => 'Il testo è obbligatorio.',
-            'active.required' => 'Lo stato attivo è obbligatorio.',
+            'register_number' => 'required|numeric',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'birth' => 'required|date',
+            'zip' => 'nullable|numeric',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
 
-        $news = News::create($request->post());
+        $patrizio = Patrizio::create(
+            $request->except('father_id', 'mother_id')
+        );
 
-        return redirect()->route('news.create', $news->id)->with('success','News creata.');
+        if ($request->hasFile('picture')) {
+            $imageName = time().'.'.$request->picture->extension();
+            $filePath = $request->picture->storeAs('images', $imageName, 'public');
+            $patrizio->picture = $filePath;
+            $patrizio->save();
+        }
+
+        $this->saveParent($request, $patrizio->id, 'father', 'father_id', 'father_name', 'father_is_patrizio');
+        $this->saveParent($request, $patrizio->id, 'mother', 'mother_id', 'mother_name', 'mother_is_patrizia');
+
+        return redirect()->route('patrizi.create')->with('success','Patrizio creato.');
     }
+
+    private function saveParent($request, $patrizioId, $type, $idField, $nameField, $checkboxField)
+    {
+        // caso: patrizio
+        if ($request->has($checkboxField)) {
+
+            if ($request->filled($idField)) {
+
+                DB::table('relations')->insert([
+                    'patrizio1_id'     => $request->input($idField),
+                    'extern_person_id' => null,
+                    'patrizio2_id'     => $patrizioId,
+                    'type'             => $type,
+                    'created_at'       => now(),
+                    'updated_at'       => now(),
+                ]);
+            }
+
+        } else {
+
+            // caso: persona esterna
+            if ($request->filled($nameField)) {
+
+                $externId = DB::table('extern_persons')->insertGetId([
+                    'fullname'   => $request->input($nameField),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                DB::table('relations')->insert([
+                    'patrizio1_id'     => null,
+                    'extern_person_id' => $externId,
+                    'patrizio2_id'     => $patrizioId,
+                    'type'             => $type,
+                    'created_at'       => now(),
+                    'updated_at'       => now(),
+                ]);
+            }
+        }
+    }
+
+
     public function edit($patrizioId)
     {
         //$patrizio = Patrizio::find(477); // Ottieni un modello
@@ -195,20 +251,68 @@ class PatriziController extends Controller
         $patrizio->update($request->except('picture', 'father_id', 'mother_id'));
 
 
-        // PADRE
-        if ($request->filled('father_id')) {
-            DB::table('relations')->updateOrInsert(
-                ['patrizio2_id' => $patrizio->id, 'type' => 'father'],
-                ['patrizio1_id' => $request->input('father_id')]
-            );
-        } else {
+       ///////////////////////// // PADRE/////////////////////////7
+        //se il padre è patrizio il checkbox è già checcato, quindi lo associo
+        if ($request->has('father_is_patrizio')) {
+            if ($request->filled('father_id')) {
+                DB::table('relations')->updateOrInsert(
+                    ['patrizio2_id' => $patrizio->id, 'type' => 'father'],
+                    ['patrizio1_id' => $request->input('father_id'), 'extern_person_id' => NULL]
+                );
+            }
+        }
+        //se il padre non è patrizio, il checkbox non è checcato,
+        // quindi elimino l'eventuale associazione e inserisco nome e cogmome del padre non patrizio all'interno
+        // della tabella extern_person
+
+        else {
+
+            // 🔹 elimino eventuale persona esterna già associata
+            $oldExtern = DB::table('extern_persons')
+                ->leftJoin('relations', 'extern_persons.id', '=', 'relations.extern_person_id')
+                ->where('relations.patrizio2_id', $patrizio->id)
+                ->where('relations.type', 'father')
+                ->select('extern_persons.id')
+                ->first();
+
             DB::table('relations')
                 ->where('patrizio2_id', $patrizio->id)
                 ->where('type', 'father')
                 ->delete();
+
+
+
+            if ($oldExtern) {
+                DB::table('extern_persons')->where('id', $oldExtern->id)->delete();
+            }
+
+            // 🔹 Creo/aggiorno la persona esterna (nome completo in una colonna)
+            $externId = DB::table('extern_persons')->updateOrInsert(
+                ['fullname' => $request->input('father_name')],
+                ['updated_at' => now(), 'created_at' => now()]
+            );
+
+            // recupero id appena creato/aggiornato
+            $extern = DB::table('extern_persons')
+                ->where('fullname', $request->input('father_name'))
+                ->first();
+
+            // 🔹 Inserisco la relazione con la persona esterna
+            DB::table('relations')->insert([
+                'patrizio1_id'     => null,
+                'extern_person_id' => $extern->id,
+                'patrizio2_id'     => $patrizio->id,
+                'type'             => 'father',
+                'created_at'       => now(),
+                'updated_at'       => now(),
+            ]);
+
+
+
+
         }
 
-// MADRE
+// /////////////////////7MADRE/////////////////////////////////////////////////////////
         //se la madre è patrizia il checkbox è già checcato, quindi lo associo
         if ($request->has('mother_is_patrizia')) {
             if ($request->filled('mother_id')) {

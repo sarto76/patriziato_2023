@@ -121,20 +121,11 @@
                 <div class="form-group">
                     <strong>Padre:</strong>
 
-                    <select name="father_id" class="form-control">
-                        <option value="">--</option>
-                        @foreach($patrizi as $single)
-                            <option value="{{ $single->id }}"
-                                {{ $patrizio->father?->id == $single->id ? 'selected' : '' }}>
-                                {{ $single->firstname }} {{ $single->lastname }}
-                            </option>
-                        @endforeach
-
-                    </select>
-
-                 {{--   @foreach($patrizi as $single)
-                        {{$single->id}} {{$single->firstname}} {{$single->lastname}} {{$single->father->id}} {{$patrizio->id}}  <br>
-                    @endforeach--}}
+                    <label for="father_input">Padre</label>
+                    <input type="checkbox" id="father_is_patrizio" name="father_is_patrizio" checked>
+                    <label for="father_is_patrizio">È patrizio?</label>
+                    <select id="father_input" class="form-control mt-1" name="father_name" style="width: 100%"></select>
+                    <input type="hidden" name="father_id" id="father_id">
 
         </div>
                 <div class="row">
@@ -148,19 +139,6 @@
                             <select id="mother_input" class="form-control mt-1" name="mother_name" style="width: 100%"></select>
                             <input type="hidden" name="mother_id" id="mother_id">
 
-
-
-                           {{-- <select name="mother_id" class="form-control">
-                                <option value="">--</option>
-                                @foreach($patrizi as $single)
-                                    <option value="{{ $single->id }}" {{ $patrizio->mother->id == $single->id ? 'selected' : '' }}>{{ $single->firstname }} {{ $single->lastname }}</option>
-                                @endforeach
-
-                            </select>
---}}
-                            {{--   @foreach($patrizi as $single)
-                                   {{$single->id}} {{$single->firstname}} {{$single->lastname}} {{$single->father->id}} {{$patrizio->id}}  <br>
-                               @endforeach--}}
 
                         </div>
 
@@ -329,6 +307,62 @@
                 }
 
             });
+
+
+            /* ============================
+              PRELOAD PADRE IN EDIT MODE
+           ============================ */
+
+            @if(isset($patrizio) && $patrizio->father)
+
+            var fatherId = '{{ $patrizio->father->id }}';
+            var fatherName = '{{ $patrizio->father->firstname }} {{ $patrizio->father->lastname }}';
+            var fatherIsExtern = {{ $patrizio->relationFather && $patrizio->relationFather->extern_person_id ? 'true' : 'false' }};
+
+
+            $('#father_id').val(fatherId);
+
+            var newOption = new Option(fatherName, fatherId, true, true);
+
+            // 👇 Salviamo se è esterna o no
+            $(newOption).attr('data-is-extern', fatherIsExtern);
+
+            $('#father_input').append(newOption).trigger('change');
+
+            // Stato checkbox iniziale corretto
+            $('#father_is_patrizio').prop('checked', !fatherIsExtern);
+
+            @endif
+
+
+            /* ============================
+               CHANGE HANDLER PADRE
+            ============================ */
+
+            $('#father_input').on('change select2:select select2:unselect', function() {
+
+                const selectedValue = $(this).val();
+                const selectedOption = $(this).find(':selected');
+
+                // Aggiorna hidden
+                $('#father_id').val(selectedValue);
+
+                if (!selectedValue) {
+                    $('#father_is_patrizio').prop('checked', false);
+                    return;
+                }
+
+                const isManualInput = selectedOption.data('select2-tag') === true;
+                const isExtern = selectedOption.data('is-extern') === true;
+
+                if (isManualInput || isExtern) {
+                    $('#father_is_patrizio').prop('checked', false);
+                } else {
+                    $('#father_is_patrizio').prop('checked', true);
+                }
+
+            });
+
 
         });
 

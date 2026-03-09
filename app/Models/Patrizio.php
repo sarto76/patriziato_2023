@@ -23,8 +23,9 @@ class Patrizio extends Model
 
     public function relationFather()
     {
-        return $this->hasOne(Relation::class, 'patrizio2_id')
+       return $this->hasOne(Relation::class, 'patrizio2_id')
             ->where('type', 'father');
+
     }
 
 
