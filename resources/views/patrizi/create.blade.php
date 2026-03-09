@@ -84,8 +84,8 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Vivente:</strong>
-                    <input type="hidden" name="living" value="0">
-                    <input type="checkbox" name="living" value="1" {{ old('living') ? 'checked' : '' }}>
+                    <input type="hidden" name="living" value="1">
+                    <input type="checkbox" name="living" value="1" checked>
                     @error('living')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
