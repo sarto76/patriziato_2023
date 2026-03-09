@@ -8,7 +8,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <div id="logo">
-                <a class="pt-2" href="index.html"><img src="{!! url('images/stemma.png') !!}" alt=""></a>
+                <a class="pt-2" href="#hero"><img src="{!! url('images/stemma.png') !!}" alt=""></a>
                 <!-- Uncomment below if you prefer to use a text logo -->
                 <!--<h1><a href="index.html">Regna</a></h1>-->
             </div>
