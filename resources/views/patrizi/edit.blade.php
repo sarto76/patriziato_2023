@@ -121,26 +121,11 @@
                 <div class="form-group">
                     <strong>Padre:</strong>
 
-                    <label for="father_input">Madre</label>
+                    <label for="father_input">Padre</label>
                     <input type="checkbox" id="father_is_patrizio" name="father_is_patrizio" checked>
-                    <label for="father_is_patrizio">È patrizia?</label>
+                    <label for="father_is_patrizio">È patrizio?</label>
                     <select id="father_input" class="form-control mt-1" name="father_name" style="width: 100%"></select>
                     <input type="hidden" name="father_id" id="father_id">
-
-                   {{-- <select name="father_id" class="form-control">
-                        <option value="">--</option>
-                        @foreach($patrizi as $single)
-                            <option value="{{ $single->id }}"
-                                {{ $patrizio->father?->id == $single->id ? 'selected' : '' }}>
-                                {{ $single->firstname }} {{ $single->lastname }}
-                            </option>
-                        @endforeach
-
-                    </select>--}}
-
-                 {{--   @foreach($patrizi as $single)
-                        {{$single->id}} {{$single->firstname}} {{$single->lastname}} {{$single->father->id}} {{$patrizio->id}}  <br>
-                    @endforeach--}}
 
         </div>
                 <div class="row">
@@ -154,19 +139,6 @@
                             <select id="mother_input" class="form-control mt-1" name="mother_name" style="width: 100%"></select>
                             <input type="hidden" name="mother_id" id="mother_id">
 
-
-
-                           {{-- <select name="mother_id" class="form-control">
-                                <option value="">--</option>
-                                @foreach($patrizi as $single)
-                                    <option value="{{ $single->id }}" {{ $patrizio->mother->id == $single->id ? 'selected' : '' }}>{{ $single->firstname }} {{ $single->lastname }}</option>
-                                @endforeach
-
-                            </select>
---}}
-                            {{--   @foreach($patrizi as $single)
-                                   {{$single->id}} {{$single->firstname}} {{$single->lastname}} {{$single->father->id}} {{$patrizio->id}}  <br>
-                               @endforeach--}}
 
                         </div>
 

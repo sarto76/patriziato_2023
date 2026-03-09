@@ -133,20 +133,73 @@ class PatriziController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'text' => 'required',
-            'active' => 'required',
-        ], [
-            'title.required' => 'Il titolo è obbligatorio.',
-            'text.required' => 'Il testo è obbligatorio.',
-            'active.required' => 'Lo stato attivo è obbligatorio.',
+            'register_number' => 'required|numeric',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'birth' => 'required|date',
+            'zip' => 'nullable|numeric',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
 
-        $news = News::create($request->post());
+        $patrizio = Patrizio::create(
+            $request->except('father_id', 'mother_id')
+        );
 
-        return redirect()->route('news.create', $news->id)->with('success','News creata.');
+        if ($request->hasFile('picture')) {
+            $imageName = time().'.'.$request->picture->extension();
+            $filePath = $request->picture->storeAs('images', $imageName, 'public');
+            $patrizio->picture = $filePath;
+            $patrizio->save();
+        }
+
+        $this->saveParent($request, $patrizio->id, 'father', 'father_id', 'father_name', 'father_is_patrizio');
+        $this->saveParent($request, $patrizio->id, 'mother', 'mother_id', 'mother_name', 'mother_is_patrizia');
+
+        return redirect()->route('patrizi.create')->with('success','Patrizio creato.');
     }
+
+    private function saveParent($request, $patrizioId, $type, $idField, $nameField, $checkboxField)
+    {
+        // caso: patrizio
+        if ($request->has($checkboxField)) {
+
+            if ($request->filled($idField)) {
+
+                DB::table('relations')->insert([
+                    'patrizio1_id'     => $request->input($idField),
+                    'extern_person_id' => null,
+                    'patrizio2_id'     => $patrizioId,
+                    'type'             => $type,
+                    'created_at'       => now(),
+                    'updated_at'       => now(),
+                ]);
+            }
+
+        } else {
+
+            // caso: persona esterna
+            if ($request->filled($nameField)) {
+
+                $externId = DB::table('extern_persons')->insertGetId([
+                    'fullname'   => $request->input($nameField),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                DB::table('relations')->insert([
+                    'patrizio1_id'     => null,
+                    'extern_person_id' => $externId,
+                    'patrizio2_id'     => $patrizioId,
+                    'type'             => $type,
+                    'created_at'       => now(),
+                    'updated_at'       => now(),
+                ]);
+            }
+        }
+    }
+
+
     public function edit($patrizioId)
     {
         //$patrizio = Patrizio::find(477); // Ottieni un modello
