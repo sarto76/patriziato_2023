@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ImportBoscoGurin extends Command
 {
@@ -124,5 +125,49 @@ class ImportBoscoGurin extends Command
         } catch (\Exception $e) {
             $this->error('Errore durante l’import: ' . $e->getMessage());
         }
+
+
+        $this->info('Inizio procedura di estrazione immagini...');
+
+        // 1️⃣ Pulizia preventiva della cartella di destinazione
+        $directory = 'private/documents'; // Sottocartella per tenere ordinato
+        if (Storage::disk('local')->exists($directory)) {
+            $this->warn("Pulizia cartella esistente: storage/app/{$directory}");
+            Storage::disk('local')->deleteDirectory($directory);
+        }
+        Storage::disk('local')->makeDirectory($directory);
+
+        // 2️⃣ Estrazione da tabella 'docs' (colonna 'content')
+        $this->info('Estrazione da tabella: docs...');
+        DB::connection('bosco_gurin')->table('docs')
+            ->whereNotNull('content')
+            ->orderBy('id')
+            ->chunk(100, function ($docs) use ($directory) {
+                foreach ($docs as $doc) {
+                    $filename = "doc_{$doc->id}.pdf"; // Estensione presunta, cambiala se sai che sono PDF
+                    Storage::disk('local')->put($directory . '/' . $filename, $doc->content);
+
+                    // Opzionale: aggiorna il nuovo DB qui se necessario
+                    $this->info("Salvato documento: {$filename}");
+                }
+            });
+
+        // 3️⃣ Estrazione da tabella 'prop_media' (colonna 'datas')
+        $this->info('Estrazione da tabella: prop_media...');
+        DB::connection('bosco_gurin')->table('prop_media')
+            ->whereNotNull('datas')
+            ->orderBy('idprop_media')
+            ->chunk(100, function ($media) use ($directory) {
+                foreach ($media as $m) {
+                    $filename = "media_{$m->idprop_media}.png";
+                    Storage::disk('local')->put($directory . '/' . $filename, $m->datas);
+
+                    $this->info("Salvato media: {$filename}");
+                }
+            });
+
+        $this->info('Importazione file fisici completata con successo!');
+
+
     }
 }

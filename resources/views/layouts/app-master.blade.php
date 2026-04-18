@@ -14,7 +14,7 @@
 
 
     <!----------------------------------------------------------------------------------- regna core ----------------------------------------------------------------->
-    <link href="{!! url('images/favicon.png') !!}" rel="icon">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link href="{!! url('images/apple-touch-icon.png') !!}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -58,6 +58,7 @@
 @endauth
 
 <main class="container">
+
     @yield('content')
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Questo è molto importante -->

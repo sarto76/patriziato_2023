@@ -72,8 +72,16 @@
     <section id="hero" style="background: url('{{ asset('storage/properties/bg-estate.jpg') }}') top center;">
 
 
-        <div class="hero-container" style="background: '<?php echo url('images/bg-estate.jpg'); ?>'" data-aos="zoom-in"
+
+        <div class="hero-container"
+             style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{{ asset('images/bg-estate2.webp') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;"
+             data-aos="zoom-in"
              data-aos-delay="100">
+
+
             <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
             <h2>Copyright 2025 MS</h2>
             <a href="#about" class="btn-get-started">Inizio</a>
