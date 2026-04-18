@@ -22,6 +22,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/info', 'InfoController@index')->name('info.index');
     Route::put('info/{id}','InfoController@update')->name('info.update');
 
+    
     Route::get('/news', 'NewsController@index')->name('news.index');
     Route::get('/news/create', 'NewsController@create')->name('news.create');
     Route::post('/news', 'NewsController@store')->name('news.store');
