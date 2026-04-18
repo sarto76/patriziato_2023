@@ -20,8 +20,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/', 'HomeController@index')->name('home.index');
 
     Route::get('/info', 'InfoController@index')->name('info.index');
-    Route::get('/info/{id}', 'InfoController@update')->name('info.update');
-
+    Route::put('info/{id}','InfoController@update')->name('info.update');
 
     Route::get('/news', 'NewsController@index')->name('news.index');
     Route::get('/news/create', 'NewsController@create')->name('news.create');
@@ -30,7 +29,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::delete('/news/{news}', 'NewsController@destroy')->name('news.destroy');
     Route::put('news/{id}','NewsController@update')->name('news.update');
 
-    Route::put('info/{id}','InfoController@update')->name('info.update');
+
 
     Route::get('/documents', 'DocumentsController@index')->name('documents.index');
     Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
