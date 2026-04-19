@@ -26,6 +26,7 @@
     <link href="{!! url('assets/regna/boxicons/css/boxicons.min.css') !!}" rel="stylesheet">
     <link href="{!! url('assets/regna/glightbox/css/glightbox.min.css') !!}" rel="stylesheet">
     <link href="{!! url('assets/regna/swiper/swiper-bundle.min.css') !!}" rel="stylesheet">
+    <link href="{!! url('assets/regna/bootstrap-icons/bootstrap-icons.css') !!}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="{!! url('assets/regna/css/style.css') !!}" rel="stylesheet">

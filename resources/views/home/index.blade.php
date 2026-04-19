@@ -69,7 +69,7 @@
     </header><!-- End Header -->
 
     <!-- ======= Hero Section ======= -->
-    <section id="hero" style="background: url('{{ asset('storage/properties/bg-estate.jpg') }}') top center;">
+    <section id="hero" style="background: url('{{ asset('images/bg-estate2.webp') }}') top center;">
 
 
 
