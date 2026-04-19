@@ -285,6 +285,10 @@ h6 {
   transition: 0.5s;
 }
 
+.mobile-nav-toggle.bi-x {
+    margin-top: -10px;
+}
+
 @media (max-width: 991px) {
   .mobile-nav-toggle {
     display: block;
