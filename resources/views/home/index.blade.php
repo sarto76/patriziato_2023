@@ -83,7 +83,7 @@
 
 
             <h1>Benvenuti sul sito del Patriziato di Bosco Gurin</h1>
-            <h2>Copyright 2025 MS</h2>
+            <h2>Gestione del territorio, tradizione e comunità</h2>
             <a href="#about" class="btn-get-started">Inizio</a>
         </div>
     </section><!-- End Hero Section -->
