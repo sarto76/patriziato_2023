@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\COntactController;
 use App\Models\Patrizio;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
@@ -18,63 +19,6 @@ use App\Http\Controllers\NewsController;
 Route::group(['namespace' => 'App\Http\Controllers'], function()
 {
     Route::get('/', 'HomeController@index')->name('home.index');
-
-    Route::get('/info', 'InfoController@index')->name('info.index');
-    Route::put('info/{id}','InfoController@update')->name('info.update');
-
-
-    Route::get('/news', 'NewsController@index')->name('news.index');
-    Route::get('/news/create', 'NewsController@create')->name('news.create');
-    Route::post('/news', 'NewsController@store')->name('news.store');
-    Route::get('/news/{news}/edit', 'NewsController@edit')->name('news.edit');
-    Route::delete('/news/{news}', 'NewsController@destroy')->name('news.destroy');
-    Route::put('news/{id}','NewsController@update')->name('news.update');
-
-
-
-    Route::get('/documents', 'DocumentsController@index')->name('documents.index');
-    Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
-    Route::post('/documents', 'DocumentsController@store')->name('documents.store');
-    Route::delete('/documents/{documents}', 'DocumentsController@destroy')->name('documents.destroy');
-
-    Route::get('/properties', 'PropertiesController@index')->name('properties.index');
-    Route::get('/properties/create', 'PropertiesController@create')->name('properties.create');
-    Route::post('/properties', 'PropertiesController@store')->name('properties.store');
-    Route::delete('/properties/{properties}', 'PropertiesController@destroy')->name('properties.destroy');
-
-    Route::get('/link', 'LinkController@index')->name('link.index');
-    Route::get('/link/create', 'LinkController@create')->name('link.create');
-    Route::post('/link', 'LinkController@store')->name('link.store');
-    Route::get('/link/{link}/edit', 'LinkController@edit')->name('link.edit');
-    Route::delete('/link/{link}', 'LinkController@destroy')->name('link.destroy');
-    Route::put('link/{id}','LinkController@update')->name('link.update');
-
-    Route::get('/patrizi', 'PatriziController@index')->name('patrizi.index');
-    Route::get('/patrizi/create', 'PatriziController@create')->name('patrizi.create');
-    Route::post('/patrizi', 'PatriziController@store')->name('patrizi.store');
-    Route::get('/patrizi/{patrizi}/edit', 'PatriziController@edit')->name('patrizi.edit');
-    Route::delete('/patrizi/{patrizio}', 'PatriziController@destroy')->name('patrizi.destroy');
-    Route::put('patrizi/{id}','PatriziController@update')->name('patrizi.update');
-    Route::get('/patrizi/data', 'PatriziController@getPatriziData')->name('patrizi.data');
-    Route::get('/patrizi/search', 'PatriziController@searchPatrizi')->name('patrizi.search');
-
-    Route::get('/patrizi/get/{id}', function($id) {
-        $patrizio = Patrizio::findOrFail($id);
-        return response()->json([
-            'id' => $patrizio->id,
-            'text' => $patrizio->firstname . ' ' . $patrizio->lastname
-        ]);
-    });
-
-
-    Route::get('/component', 'ComponentsController@index')->name('component.index');
-    Route::get('/component/create', 'ComponentsController@create')->name('component.create');
-    Route::post('/component', 'ComponentsController@store')->name('component.store');
-    Route::get('/component/{component}/edit', 'ComponentsController@edit')->name('component.edit');
-    Route::delete('/component/{id}', 'ComponentsController@destroy')->name('component.destroy');
-    Route::put('component/{id}','ComponentsController@update')->name('component.update');
-
-
 
     Route::group(['middleware' => ['guest']], function() {
         /**
@@ -95,6 +39,62 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         /**
          * Logout Routes
          */
+        Route::get('/info', 'InfoController@index')->name('info.index');
+        Route::put('info/{id}','InfoController@update')->name('info.update');
+
+
+        Route::get('/news', 'NewsController@index')->name('news.index');
+        Route::get('/news/create', 'NewsController@create')->name('news.create');
+        Route::post('/news', 'NewsController@store')->name('news.store');
+        Route::get('/news/{news}/edit', 'NewsController@edit')->name('news.edit');
+        Route::delete('/news/{news}', 'NewsController@destroy')->name('news.destroy');
+        Route::put('news/{id}','NewsController@update')->name('news.update');
+
+
+
+        Route::get('/documents', 'DocumentsController@index')->name('documents.index');
+        Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
+        Route::post('/documents', 'DocumentsController@store')->name('documents.store');
+        Route::delete('/documents/{documents}', 'DocumentsController@destroy')->name('documents.destroy');
+
+        Route::get('/properties', 'PropertiesController@index')->name('properties.index');
+        Route::get('/properties/create', 'PropertiesController@create')->name('properties.create');
+        Route::post('/properties', 'PropertiesController@store')->name('properties.store');
+        Route::delete('/properties/{properties}', 'PropertiesController@destroy')->name('properties.destroy');
+
+        Route::get('/link', 'LinkController@index')->name('link.index');
+        Route::get('/link/create', 'LinkController@create')->name('link.create');
+        Route::post('/link', 'LinkController@store')->name('link.store');
+        Route::get('/link/{link}/edit', 'LinkController@edit')->name('link.edit');
+        Route::delete('/link/{link}', 'LinkController@destroy')->name('link.destroy');
+        Route::put('link/{id}','LinkController@update')->name('link.update');
+
+        Route::get('/patrizi', 'PatriziController@index')->name('patrizi.index');
+        Route::get('/patrizi/create', 'PatriziController@create')->name('patrizi.create');
+        Route::post('/patrizi', 'PatriziController@store')->name('patrizi.store');
+        Route::get('/patrizi/{patrizi}/edit', 'PatriziController@edit')->name('patrizi.edit');
+        Route::delete('/patrizi/{patrizio}', 'PatriziController@destroy')->name('patrizi.destroy');
+        Route::put('patrizi/{id}','PatriziController@update')->name('patrizi.update');
+        Route::get('/patrizi/data', 'PatriziController@getPatriziData')->name('patrizi.data');
+        Route::get('/patrizi/search', 'PatriziController@searchPatrizi')->name('patrizi.search');
+
+        Route::get('/patrizi/get/{id}', function($id) {
+            $patrizio = Patrizio::findOrFail($id);
+            return response()->json([
+                'id' => $patrizio->id,
+                'text' => $patrizio->firstname . ' ' . $patrizio->lastname
+            ]);
+        });
+
+
+        Route::get('/component', 'ComponentsController@index')->name('component.index');
+        Route::get('/component/create', 'ComponentsController@create')->name('component.create');
+        Route::post('/component', 'ComponentsController@store')->name('component.store');
+        Route::get('/component/{component}/edit', 'ComponentsController@edit')->name('component.edit');
+        Route::delete('/component/{id}', 'ComponentsController@destroy')->name('component.destroy');
+        Route::put('component/{id}','ComponentsController@update')->name('component.update');
+
+
         Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
     });
 });
